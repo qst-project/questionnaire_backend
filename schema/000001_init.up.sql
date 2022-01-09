@@ -59,6 +59,7 @@ CREATE TABLE TextPossibleAnswer
 
 CREATE TABLE TextAnswer
 (
+  id SERIAL not null unique,
   textPossibleAnswer int references TextPossibleAnswer(id) on delete cascade not null,
   user_id int,
   answer varchar (255) not null,
