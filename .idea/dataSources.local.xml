@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="GO-213.6461.81">
-    <data-source name="postgres@localhost" uuid="ba664de0-be7d-4009-a0a9-daecf8357273">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
+  <component name="dataSourceStorageLocal" created-in="IU-213.6777.52">
+    <data-source name="questionnaire_backend@localhost [2]" uuid="9cdf67f8-267a-4e0b-b0a7-4553f0105637">
+      <database-info product="PostgreSQL" version="14.1 (Debian 14.1-1.pgdg110+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.22" dbms="POSTGRES" exact-version="14.1" exact-driver-version="42.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <schema-mapping />
+      <user-name>skinny</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
   </component>
 </project>
