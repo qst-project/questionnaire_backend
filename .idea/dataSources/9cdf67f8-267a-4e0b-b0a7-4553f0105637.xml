@@ -3,15 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.32">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-13756||-9223372036854775808|c|G
-13756||10|c|G
-13756||10|C|G
-13756||10|T|G</Grants>
-      <IntrospectionStateNumber>743</IntrospectionStateNumber>
+      <IntrospectionStateNumber>754</IntrospectionStateNumber>
       <ServerVersion>14.1</ServerVersion>
       <StartupTime>1643489459</StartupTime>
       <TimeZones>true ACDT
@@ -1408,9 +1400,9 @@ false posixrules
 13391||10|C|G
 13391||-9223372036854775808|U|G
 13391||10|U|G</Grants>
-      <IntrospectionStateNumber>744</IntrospectionStateNumber>
+      <IntrospectionStateNumber>755</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
-      <Relations>sequence|table|16385|16386|1
+      <Relations>sequence|table|16395|16396|1
 </Relations>
       <OwnerName>skinny</OwnerName>
     </database>
@@ -4831,87 +4823,100 @@ false posixrules
     <schema id="262" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>744</IntrospectionStateNumber>
+      <IntrospectionStateNumber>755</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>skinny</OwnerName>
     </schema>
-    <sequence id="263" parent="262" name="products_id_seq">
+    <sequence id="263" parent="262" name="users_id_seq">
       <DataType>bigint|0s</DataType>
-      <ObjectId>16385</ObjectId>
-      <StateNumber>735</StateNumber>
+      <ObjectId>16395</ObjectId>
+      <StateNumber>745</StateNumber>
       <OwnerName>skinny</OwnerName>
     </sequence>
-    <table id="264" parent="262" name="products">
-      <ObjectId>16386</ObjectId>
-      <StateNumber>735</StateNumber>
+    <table id="264" parent="262" name="users">
+      <ObjectId>16396</ObjectId>
+      <StateNumber>745</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>skinny</OwnerName>
     </table>
     <column id="265" parent="264" name="id">
       <DataType>bigint|0s</DataType>
-      <DefaultExpression>nextval(&apos;products_id_seq&apos;::regclass)</DefaultExpression>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <TypeId>20</TypeId>
     </column>
     <column id="266" parent="264" name="created_at">
       <DataType>timestamp with time zone|0s</DataType>
       <Position>2</Position>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <TypeId>1184</TypeId>
     </column>
     <column id="267" parent="264" name="updated_at">
       <DataType>timestamp with time zone|0s</DataType>
       <Position>3</Position>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <TypeId>1184</TypeId>
     </column>
     <column id="268" parent="264" name="deleted_at">
       <DataType>timestamp with time zone|0s</DataType>
       <Position>4</Position>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="269" parent="264" name="code">
+    <column id="269" parent="264" name="google_id">
       <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="270" parent="264" name="price">
-      <DataType>bigint|0s</DataType>
-      <Position>6</Position>
-      <StateNumber>735</StateNumber>
-      <TypeId>20</TypeId>
-    </column>
-    <index id="271" parent="264" name="products_pkey">
+    <index id="270" parent="264" name="users_pkey">
       <ClassIds>3124</ClassIds>
       <ColNames>id</ColNames>
       <CollationIds>0</CollationIds>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16392</ObjectId>
+      <ObjectId>16402</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>735</StateNumber>
+      <StateNumber>745</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="272" parent="264" name="idx_products_deleted_at">
+    <index id="271" parent="264" name="users_google_id_key">
+      <ClassIds>3126</ClassIds>
+      <ColNames>google_id</ColNames>
+      <CollationIds>100</CollationIds>
+      <CollationNames>default</CollationNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16404</ObjectId>
+      <StateNumber>745</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="272" parent="264" name="idx_users_deleted_at">
       <ClassIds>3127</ClassIds>
       <ColNames>deleted_at</ColNames>
       <CollationIds>0</CollationIds>
-      <ObjectId>16394</ObjectId>
-      <StateNumber>736</StateNumber>
+      <ObjectId>16406</ObjectId>
+      <StateNumber>746</StateNumber>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="273" parent="264" name="products_pkey">
+    <key id="273" parent="264" name="users_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16393</ObjectId>
+      <ObjectId>16403</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>735</StateNumber>
-      <UnderlyingIndexId>16392</UnderlyingIndexId>
+      <StateNumber>745</StateNumber>
+      <UnderlyingIndexId>16402</UnderlyingIndexId>
+    </key>
+    <key id="274" parent="264" name="users_google_id_key">
+      <ColNames>google_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16405</ObjectId>
+      <StateNumber>745</StateNumber>
+      <UnderlyingIndexId>16404</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

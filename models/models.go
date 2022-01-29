@@ -4,55 +4,55 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	googleId string `gorm:"not null;unique"`
+	GoogleId string `gorm:"not null;unique"`
 }
 
 type Questionnaire struct {
 	gorm.Model
-	title string `gorm:"not null;size:256"`
-	creator_id User
+	Title     string `gorm:"not null;size:256"`
+	CreatorId User
 }
 
 type Question struct {
 	gorm.Model
-	order int `gorm:"not null"`
-	questionnaire Questionnaire
-	kind int `gorm:"not null"`
-	text string `gorm:"size:256;not null"`
+	Order int `gorm:"not null"`
+	Questionnaire Questionnaire
+	Kind int `gorm:"not null"`
+	Text string `gorm:"size:256;not null"`
 
 }
 
 type RadioPossibleAnswer struct {
 	gorm.Model
-	question Question
-	text string `gorm:"size:256;not null"`
+	Question Question
+	Text string `gorm:"size:256;not null"`
 }
 
 type RadioAnswer struct {
 	gorm.Model
-	radioPossibleAnswer RadioPossibleAnswer
+	RadioPossibleAnswer RadioPossibleAnswer
 }
 
 type CheckboxPossibleAnswer struct {
 	gorm.Model
-	question Question
-	text string `gorm:"size:256;not null"`
+	Question Question
+	Text string `gorm:"size:256;not null"`
 }
 
 type CheckboxAnswer struct {
 	gorm.Model
-	checkboxPossibleAnswer CheckboxPossibleAnswer
+	CheckboxPossibleAnswer CheckboxPossibleAnswer
 }
 
 type TextPossibleAnswer struct {
 	gorm.Model
-	question Question
-	text string `gorm:"size:256;not null"`
-	placeholder string `gorm:"size:256;"`
+	Question Question
+	Text string `gorm:"size:256;not null"`
+	Placeholder string `gorm:"size:256;"`
 }
 
 type TextAnswer struct {
 	gorm.Model
-	textPossibleAnswer TextPossibleAnswer
-	answer string `gorm:"size:256;not null"`
+	TextPossibleAnswer TextPossibleAnswer
+	Answer string `gorm:"size:256;not null"`
 }
