@@ -1,0 +1,16 @@
+syntax = "proto3";
+option go_package = "../../";
+
+package api;
+
+service Questionnaire {
+  rpc Test(TestRequest) returns (TestResponse) {}
+}
+
+message TestRequest {
+  string request = 1;
+}
+
+message  TestResponse {
+  string result = 1;
+}
