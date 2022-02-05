@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c69cfe2e-4adb-48b3-8bbc-a37617cb422a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pkg/configs/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/repository/postgres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9cdf67f8-267a-4e0b-b0a7-4553f0105637.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9cdf67f8-267a-4e0b-b0a7-4553f0105637.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b9aa7a8e-6ca7-406c-b5a1-d854014933a4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b9aa7a8e-6ca7-406c-b5a1-d854014933a4/storage_v2/_src_/database/postgres.edMnLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b9aa7a8e-6ca7-406c-b5a1-d854014933a4/storage_v2/_src_/database/questionnaire_backend.-Gd0Kw.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/server/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/questionnaire/grpcserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/questionnaire/grpcserver.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +106,7 @@
       <workItem from="1643488701301" duration="9537000" />
       <workItem from="1643563286415" duration="639000" />
       <workItem from="1643827655023" duration="1182000" />
-      <workItem from="1644079217184" duration="8807000" />
+      <workItem from="1644079217184" duration="9279000" />
     </task>
     <servers />
   </component>
