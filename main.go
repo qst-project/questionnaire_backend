@@ -1,28 +1,88 @@
 package main
 
 import (
-	"github.com/skinnykaen/quesionnaire_backend.git/models"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"context"
+	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
+	"github.com/skinnykaen/quesionnaire_backend.git/pkg/configs"
+	"github.com/skinnykaen/quesionnaire_backend.git/pkg/questionnaire"
+	"github.com/skinnykaen/quesionnaire_backend.git/pkg/repository"
+	"go.uber.org/fx"
+	"google.golang.org/grpc"
+	"log"
+	"net"
+	"os"
 )
 
+func NewLogger() *log.Logger {
+	logger := log.New(os.Stdout, "" /* prefix */, 0 /* flags */)
+	logger.Print("Executing NewLogger.")
+	return logger
+}
+//
+//func main(){
+//	dsn := ""
+//	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+//
+//	if err != nil {
+//		panic("failed to connect database")
+//	}
+//	db.AutoMigrate(&models.User{},
+//				   &models.Question{},
+//				   &models.Questionnaire{},
+//				   &models.RadioPossibleAnswer{},
+//				   &models.TextPossibleAnswer{},
+//				   &models.CheckboxPossibleAnswer{},
+//				   &models.CheckboxAnswer{},
+//				   &models.RadioAnswer{},
+//				   &models.TextAnswer{},
+//				   )
+//	db.Create(&models.User{})
+//	db.Create(&models.Questionnaire{})
+//	db.Create(&models.Question{})
+//	db.Create(&models.RadioPossibleAnswer{})
+//	db.Create(&models.TextPossibleAnswer{})
+//	db.Create(&models.CheckboxPossibleAnswer{})
+//	db.Create(&models.RadioAnswer{})
+//	db.Create(&models.TextAnswer{})
+//	db.Create(&models.CheckboxAnswer{})
+//
+////	docker run --rm --name questionnaire-backend-pgdocker -e POSTGRES_PASSWORD=12345 -e POSTGRES_USER=skinny -e POSTGRES_DB=questionnaire_backend -d -p 5432:5432 -v $HOME/Desktop/development/Go/questionnaire_backend/volumes/postgres postgres
+//}
 
-func main(){
-	dsn := "host=localhost user=skinny password=12345 dbname=questionnaire_backend port=5432"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+func main() {
+	app := fx.New(
+		fx.Provide(NewLogger),
+		fx.Provide(configs.NewConfig),
+		fx.Provide(repository.NewPostgresClient),
+		fx.Provide(questionnaire.New),
+		fx.Invoke(registerHooks),
+	)
+	app.Run()
+}
 
-	if err != nil {
-		panic("failed to connect database")
-	}
-	db.AutoMigrate(&models.User{},
-				   &models.Question{},
-				   &models.Questionnaire{},
-				   &models.RadioPossibleAnswer{},
-				   &models.TextPossibleAnswer{},
-				   &models.CheckboxPossibleAnswer{},
-				   &models.CheckboxAnswer{},
-				   &models.RadioAnswer{},
-				   &models.TextAnswer{},
-				   )
-	db.Create(&models.User{GoogleId: "1test"})
+
+func registerHooks(
+	lifecycle fx.Lifecycle, srv *questionnaire.GRPCServer,
+) {
+	lifecycle.Append(
+		fx.Hook{
+			OnStart: func(context.Context) error {
+				listener, err := net.Listen("tcp", "8080")
+				if err != nil {
+					log.Fatal(err)
+				}
+				s:= grpc.NewServer()
+				api.RegisterQuestionnaireServer(s, srv)
+
+				if err := s.Serve(listener); err != nil {
+					log.Fatal(err)
+				}
+
+				return nil
+			},
+			OnStop: func(context.Context) error{
+				return nil
+			},
+		},
+	)
 }

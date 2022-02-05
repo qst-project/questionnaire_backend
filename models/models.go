@@ -10,13 +10,15 @@ type User struct {
 type Questionnaire struct {
 	gorm.Model
 	Title     string `gorm:"not null;size:256"`
-	CreatorId User
+	UserId string
+	User User `gorm:"foreignKey:UserId;references:GoogleId"`
 }
 
 type Question struct {
 	gorm.Model
+	QuestionnaireId uint
+	Questionnaire Questionnaire  `gorm:"foreignKey:QuestionnaireId;references:ID"`
 	Order int `gorm:"not null"`
-	Questionnaire Questionnaire
 	Kind int `gorm:"not null"`
 	Text string `gorm:"size:256;not null"`
 
@@ -24,35 +26,41 @@ type Question struct {
 
 type RadioPossibleAnswer struct {
 	gorm.Model
-	Question Question
+	QuestionId uint
+	Question Question  `gorm:"foreignKey:QuestionId;references:ID"`
 	Text string `gorm:"size:256;not null"`
 }
 
 type RadioAnswer struct {
 	gorm.Model
-	RadioPossibleAnswer RadioPossibleAnswer
+	RadioPossibleAnswerId uint
+	RadioPossibleAnswer RadioPossibleAnswer  `gorm:"foreignKey:RadioPossibleAnswerId;references:ID"`
 }
 
 type CheckboxPossibleAnswer struct {
 	gorm.Model
-	Question Question
+	QuestionId uint
+	Question Question  `gorm:"foreignKey:QuestionId;references:ID"`
 	Text string `gorm:"size:256;not null"`
 }
 
 type CheckboxAnswer struct {
 	gorm.Model
-	CheckboxPossibleAnswer CheckboxPossibleAnswer
+	CheckboxPossibleAnswerId uint
+	CheckboxPossibleAnswer CheckboxPossibleAnswer  `gorm:"foreignKey:CheckboxPossibleAnswerId;references:ID"`
 }
 
 type TextPossibleAnswer struct {
 	gorm.Model
-	Question Question
+	QuestionId uint
+	Question Question  `gorm:"foreignKey:QuestionId;references:ID"`
 	Text string `gorm:"size:256;not null"`
 	Placeholder string `gorm:"size:256;"`
 }
 
 type TextAnswer struct {
 	gorm.Model
-	TextPossibleAnswer TextPossibleAnswer
+	TextPossibleAnswerId uint
+	TextPossibleAnswer TextPossibleAnswer  `gorm:"foreignKey:TextPossibleAnswerId;references:ID"`
 	Answer string `gorm:"size:256;not null"`
 }

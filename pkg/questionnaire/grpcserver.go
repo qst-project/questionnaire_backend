@@ -5,11 +5,15 @@ import (
 	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
 )
 
-// gRPCServer
-type GRPCServer struct {
-
+type handler struct {
+	api.UnimplementedQuestionnaireServer
 }
 
-func (s *GRPCServer) Test(ctx context.Context, req *api.TestRequest) (*api.TestResponse, error){
+type Handler = api.QuestionnaireServer
+
+func (h *handler) Test(ctx context.Context, req *api.TestRequest) (*api.TestResponse, error){
 	return & api.TestResponse{Result: "Test 1,2"}, nil
+}
+func New()(Handler, error) {
+	return &handler{}, nil
 }
