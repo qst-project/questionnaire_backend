@@ -19,7 +19,6 @@ func NewLogger() *log.Logger {
 	return logger
 }
 
-
 func main() {
 	app := fx.New(
 		fx.Provide(NewLogger),
@@ -31,7 +30,6 @@ func main() {
 	app.Run()
 }
 
-
 func registerHooks(
 	lifecycle fx.Lifecycle, srv questionnaire.Handler,
 ) {
@@ -42,7 +40,7 @@ func registerHooks(
 				if err != nil {
 					log.Fatal(err)
 				}
-				s:= grpc.NewServer()
+				s := grpc.NewServer()
 				api.RegisterQuestionnaireServer(s, srv)
 
 				if err := s.Serve(listener); err != nil {
@@ -51,7 +49,7 @@ func registerHooks(
 
 				return nil
 			},
-			OnStop: func(context.Context) error{
+			OnStop: func(context.Context) error {
 				return nil
 			},
 		},

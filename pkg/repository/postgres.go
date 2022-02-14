@@ -16,7 +16,7 @@ type PostgresClient struct {
 	logger *log.Logger
 }
 
-func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClient PostgresClient, err error){
+func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClient PostgresClient, err error) {
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -55,4 +55,3 @@ func (c *PostgresClient) Migrate() (err error) {
 	)
 	return
 }
-
