@@ -17,7 +17,6 @@ type PostgresClient struct {
 }
 
 func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClient PostgresClient, err error) {
-
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{

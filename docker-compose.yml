@@ -1,0 +1,16 @@
+services:
+  postgres:
+    restart: always
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=qst
+      - POSTGRES_PASSWORD=qst_pwd
+      - POSTGRES_DB=qst_db
+    volumes:
+      - postgres_data:/usr/lib/postgresql
+
+volumes:
+  postgres_data: {}

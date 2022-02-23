@@ -1,4 +1,4 @@
-package questionnaire
+package grpc
 
 import (
 	"context"
@@ -14,6 +14,6 @@ type Handler = api.QuestionnaireServer
 func (h *handler) Test(ctx context.Context, req *api.TestRequest) (*api.TestResponse, error) {
 	return &api.TestResponse{Result: "Test 1,2"}, nil
 }
-func New() (Handler, error) {
+func NewGrpcHandler() (Handler, error) {
 	return &handler{}, nil
 }
