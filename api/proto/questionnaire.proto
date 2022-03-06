@@ -4,7 +4,8 @@ option go_package = "../../";
 package api;
 
 service Questionnaire {
-  rpc Test(TestRequest) returns (TestResponse) {}
+  rpc Test(TestRequest) returns (TestResponse) {};
+  rpc GetSurvey(SurveyRequest) returns (SurveyResponse) {};
 }
 
 message TestRequest {
@@ -13,4 +14,17 @@ message TestRequest {
 
 message  TestResponse {
   string result = 1;
+}
+
+message Survey {
+  string UserId = 1;
+  string Title = 2;
+}
+
+message SurveyRequest {
+  string id = 1;
+}
+
+message SurveyResponse {
+  Survey result = 1;
 }
