@@ -5,15 +5,15 @@ import (
 	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
 )
 
-type handler struct {
+type RequestHandler struct {
 	api.UnimplementedQuestionnaireServer
 }
 
 type Handler = api.QuestionnaireServer
 
-func (h *handler) Test(ctx context.Context, req *api.TestRequest) (*api.TestResponse, error) {
+func (h *RequestHandler) Test(ctx context.Context, req *api.TestRequest) (*api.TestResponse, error) {
 	return &api.TestResponse{Result: "Test 1,2"}, nil
 }
 func NewGrpcHandler() (Handler, error) {
-	return &handler{}, nil
+	return &RequestHandler{}, nil
 }
