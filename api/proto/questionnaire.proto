@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "../../";
+option go_package = "../../pkg/api";
 
 package api;
 
@@ -17,14 +17,22 @@ message  TestResponse {
 }
 
 message Survey {
-  string UserId = 1;
+  string Id = 1;
   string Title = 2;
+  repeated Question Questions = 3;
+
+  message Question {
+    string Id = 1;
+    string Text = 2;
+    string Order = 3;
+    string Kind = 4;
+  }
 }
 
 message SurveyRequest {
-  string id = 1;
+  string ref = 1;
 }
 
 message SurveyResponse {
-  Survey result = 1;
+  Survey survey = 1;
 }

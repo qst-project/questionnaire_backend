@@ -2,18 +2,20 @@ package models
 
 import (
 	"gorm.io/gorm"
+	"github.com/lib/pq"
 )
 
-type User struct {
-	gorm.Model
-	GoogleId string `gorm:"not null;unique"`
-}
+// type User struct {
+// 	gorm.Model
+// 	GoogleId string `gorm:"not null;unique"`
+// }
 
 type Questionnaire struct {
 	gorm.Model
 	Title  string `gorm:"not null;size:256"`
-	UserId string
-	User   User `gorm:"foreignKey:UserId;references:GoogleId"`
+	Questions pq.StringArray `gorm:"type:text[]"`
+	// UserId string
+	// User   User `gorm:"foreignKey:UserId;references:GoogleId"`
 }
 
 type Question struct {

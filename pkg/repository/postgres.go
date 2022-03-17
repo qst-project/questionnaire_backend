@@ -42,7 +42,7 @@ func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClie
 
 func (c *PostgresClient) Migrate() (err error) {
 	err = c.db.AutoMigrate(
-		&models.User{},
+		// &models.User{},
 		&models.Question{},
 		&models.Questionnaire{},
 		&models.RadioPossibleAnswer{},

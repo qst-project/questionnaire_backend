@@ -17,6 +17,7 @@ func main(){
 	}
 	c := api.NewQuestionnaireClient(conn)
 	res, err := c.Test(context.Background(), &api.TestRequest{})
+	
 	if err != nil {
 		log.Fatal(err)
 	}

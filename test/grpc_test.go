@@ -45,3 +45,19 @@ func TestFirstEndpoint(t *testing.T) {
 	log.Printf("Response: %+v", resp)
 	// Test for output here.
 }
+
+func TestSecondEndpoint(t *testing.T) {
+	ctx := context.Background()
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	if err != nil {
+		t.Fatalf("Failed to dial bufnet: %v", err)
+	}
+	defer conn.Close()
+	client := api.NewQuestionnaireClient(conn)
+	resp, err := client.GetSurvey(ctx, &api.SurveyRequest{Ref: "1"})
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	log.Printf("Response: %+v", resp)
+	// Test for output here.
+}
