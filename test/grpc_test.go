@@ -54,7 +54,7 @@ func TestSecondEndpoint(t *testing.T) {
 	}
 	defer conn.Close()
 	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.GetSurvey(ctx, &api.SurveyRequest{Ref: "1"})
+	resp, err := client.GetSurvey(ctx, &api.SurveyRequest{Ref: "kfmdkfm/ffd"})
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}

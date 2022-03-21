@@ -36,7 +36,7 @@ func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClie
 		logger: _logger,
 	}
 	err = postgresClient.Migrate()
-	return
+	return postgresClient, nil
 
 }
 
