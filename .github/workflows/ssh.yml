@@ -7,9 +7,9 @@ jobs:
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: 123
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa # optional
-          known_hosts: 123
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
           config: ${{ secrets.CONFIG }} # ssh_config; optional
           if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: rsync over ssh
