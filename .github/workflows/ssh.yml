@@ -9,7 +9,7 @@ jobs:
         with:
           key: 123
           name: id_rsa # optional
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: 123
           config: ${{ secrets.CONFIG }} # ssh_config; optional
           if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: rsync over ssh
