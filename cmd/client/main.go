@@ -17,7 +17,7 @@ func main(){
 	}
 	c := api.NewQuestionnaireClient(conn)
 	res, err := c.Test(context.Background(), &api.TestRequest{})
-	res2, err2 := c.GetSurvey(context.Background(), &api.SurveyRequest{Ref: "kfmdkfm/ffd"})
+	res2, err2 := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "kfmdkfm/ffd"})
 	
 	if err != nil {
 		log.Fatal(err)
