@@ -18,7 +18,7 @@ func (h *RequestHandler) Test(ctx context.Context, req *api.TestRequest) (*api.T
 	return &api.TestResponse{Result: "Test 1,2"}, nil
 }
 
-func (h *RequestHandler) GetSurvey(ctx context.Context, req *api.SurveyRequest) (*api.SurveyResponse, error) {
+func (h *RequestHandler) GetSurvey(ctx context.Context, req *api.GetSurveyRequest) (*api.SurveyResponse, error) {
 	ref := req.GetRef()
 	survey1, err := h.service.GetSurvey(ref)
 	if err != nil{
@@ -34,7 +34,16 @@ func (h *RequestHandler) GetSurvey(ctx context.Context, req *api.SurveyRequest) 
 	// 		{Id: "2", Text: "Какой сегодня день?", Order: "2", Kind: "3"},
 	// 	},
 	// }
-	return &api.SurveyResponse{Survey: &survey1}, nil
+	return &api.GetSurveyResponse{Survey: &survey1}, nil
+}
+
+func (h *RequestHandler) SetSurvey(ctx context.Context, req *api.SetSurveyRequest) (*api.SetSurveyResponse, error) {
+	survey := req.GetSurvey()
+	result, ref, err := h.service.SetSurvey(survey)
+	if err != nil{
+		return nil, err
+	} 
+	return &api.SetSurveyResponse{Result: result, Ref: ref}, nil
 }
 
 func NewGrpcHandler(service *service.Service) (Handler, error) {

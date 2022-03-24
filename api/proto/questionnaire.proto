@@ -5,7 +5,8 @@ package api;
 
 service Questionnaire {
   rpc Test(TestRequest) returns (TestResponse) {};
-  rpc GetSurvey(SurveyRequest) returns (SurveyResponse) {};
+  rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {};
+  rpc SetSurvey(SetSurveyRequest) return (SetSurveyResponse) {};
 }
 
 message TestRequest {
@@ -19,7 +20,14 @@ message  TestResponse {
 message Survey {
   string Id = 1;
   string Title = 2;
-  repeated Question Questions = 3;
+  string Ref = 3;
+  repeated Question Questions = 4;
+  repeated RadioPossibleAnswer RadioPossibleAnswers = 5;
+  repeated CheckboxPossibleAnswer CheckboxPossibleAnswers = 6;
+  repeated TextPossibleAnswer TextPossibleAnswers = 7;
+  repeated RadioAnswer RadioAnswers = 8;
+  repeated CheckboxAnswer CheckboxAnswers = 9;
+  repeated TextAnswer TextAnswers = 10;
 
   message Question {
     string Id = 1;
@@ -27,12 +35,56 @@ message Survey {
     string Order = 3;
     string Kind = 4;
   }
+
+  message RadioPossibleAnswer {
+    string Id = 1;
+    string Text = 2;
+    string QuestionId = 3;
+  }
+
+  message RadioAnswer {
+    string Id = 1;
+    string RadioPossibleAnswerId = 2;
+  }
+
+  message CheckboxPossibleAnswer {
+    string Id = 1;
+    string Text = 2;
+    string QuestionId = 3;
+  }
+
+  message CheckboxAnswer {
+    string Id = 1;
+    string CheckboxPossibleAnswerId = 2;
+  }
+
+  message TextPossibleAnswer {
+    string Id = 1;
+    string Text = 2;
+    string QuestionId = 3;
+    string Placeholder = 4;
+  }
+
+  message TextAnswer {
+    string Id = 1;
+    string Answer = 2;
+    string TextPossibleAnswerId = 3;
+  }
 }
 
-message SurveyRequest {
+message GetSurveyRequest {
   string ref = 1;
 }
 
-message SurveyResponse {
+message GetSurveyResponse {
   Survey survey = 1;
+}
+
+message SetSurveyRequest {
+  Survey survey = 1;
+}
+
+message SetSurveyResponse {
+  bool result = 1;
+  string ref = 2;
 }

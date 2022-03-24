@@ -8,6 +8,9 @@ import (
 
 type Survey interface {
 	GetSurvey(id string) (api.Survey, error)
+	SetSurvey(servey api.Survey) (bool, string, error)
+	// Update
+	// Delete
 }
 
 type Service struct {

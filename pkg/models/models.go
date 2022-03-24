@@ -12,18 +12,16 @@ import (
 
 type Questionnaire struct {
 	gorm.Model
-	Title  string `gorm:"not null;size:256"`
-	Questions pq.StringArray `gorm:"type:text[]"`
-	// UserId string
-	// User   User `gorm:"foreignKey:UserId;references:GoogleId"`
+	Title  	string `gorm:"not null;size:256"`
+	Ref 	string `gorm:"not null;size:256"`
 }
 
 type Question struct {
 	gorm.Model
 	QuestionnaireId uint
 	Questionnaire   Questionnaire `gorm:"foreignKey:QuestionnaireId;references:ID"`
-	Order           int           `gorm:"not null"`
-	Kind            int           `gorm:"not null"`
+	Order          	string `gorm:"not null;size:256"`
+	Kind           	string `gorm:"not null;size:2"`
 	Text            string        `gorm:"size:256;not null"`
 }
 
