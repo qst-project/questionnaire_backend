@@ -12,10 +12,11 @@ jobs:
           known_hosts: unnecessary
 #          config: ${{ secrets.CONFIG }} # ssh_config;
 #          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
-      - name: showing Known Hosts
-        run: ssh-add -L
+
       - name: start agent
         run: eval `ssh-agent -s`
+      - name: showing Known Hosts
+        run: ssh-add -L
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.DEV_IP }} >> ~/.ssh/known_hosts
       - name: rsync over ssh
