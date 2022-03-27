@@ -8,7 +8,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          name: github-actions-rsa # optional ?
+#          name: github-actions-rsa # optional ?
           known_hosts: 'placeholder'
 #          config: ${{ secrets.CONFIG }} # ssh_config;
 #          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
