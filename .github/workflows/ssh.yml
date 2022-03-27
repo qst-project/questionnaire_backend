@@ -1,7 +1,7 @@
 on: [ push ]
 name: ssh
 jobs:
-  test:
+  ssh-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Install SSH key
@@ -10,7 +10,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: github-actions-rsa # optional
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-          config: ${{ secrets.CONFIG }} # ssh_config; optional
-          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+#          config: ${{ secrets.CONFIG }} # ssh_config; optional
+#          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: rsync over ssh
         run: rsync . qst@${{ secrets.DEV_IP }}:qst/
