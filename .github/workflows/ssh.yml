@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          name: github-actions-rsa # optional ?
-          known_hosts: 'placeholder'
+        run: ${{ secrets.SSH_PRIVATE_KEY }} >> ~/.ssh/github-actions-rsa
+      - name: Install SSH key
+        run: git-add >> ~/.ssh/github-actions-rsa
+#          name: github-actions-rsa # optional ?
+#          known_hosts: 'placeholder'
 #          config: ${{ secrets.CONFIG }} # ssh_config;
 #          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: Adding Known Hosts
