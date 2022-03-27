@@ -10,7 +10,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: github-actions-rsa # optional
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-#          config: ${{ secrets.CONFIG }} # ssh_config; optional
+#          config: ${{ secrets.CONFIG }} # ssh_config;
 #          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: rsync over ssh
         run: rsync . qst@${{ secrets.DEV_IP }}:qst/
