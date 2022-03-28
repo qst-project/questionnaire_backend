@@ -8,10 +8,10 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
-          known_hosts:  ${{ secrets.DEV_KNOWN_HOSTS }}
-#      - name: Adding Known Hosts t
-#        run: ssh-keyscan -H ${{ secrets.DEV_HOST }} >> ~/.ssh/known_hosts
+          known_hosts: ${{ secrets.DEV_KNOWN_HOSTS }}
+      #      - name: Adding Known Hosts t
+      #        run: ssh-keyscan -H ${{ secrets.DEV_HOST }} >> ~/.ssh/known_hosts
       - name: print
         run: find ~
       - name: rsync over ssh
-        run: rsync -avz ../../docker-compose.yml ${{ secrets.DEV_USER }}@${{ secrets.DEV_HOST }}:.
+        run: rsync . ${{ secrets.DEV_USER }}@${{ secrets.DEV_HOST }}:.
