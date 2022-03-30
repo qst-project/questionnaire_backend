@@ -113,3 +113,11 @@ func (r *SurveyRepository) SetSurvey(survey models.UtilitySurvey) (bool, error) 
 	//}
 	return true, nil
 }
+
+func (r *SurveyRepository) DeleteSurvey(ref string) (bool, error) {
+	var deletedQuestionnaire models.Questionnaire
+	if r.postgresClient.db.Where("ref = ?", ref).Delete(&deletedQuestionnaire).Error != nil {
+		return false, r.postgresClient.db.Where("ref = ?", ref).Delete(&deletedQuestionnaire).Error
+	}
+	return true, nil
+}

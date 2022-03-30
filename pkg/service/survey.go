@@ -26,3 +26,11 @@ func (s *SurveyService) SetSurvey(survey *api.Survey) (bool, string, error) {
 	result, err := s.repo.SetSurvey(utilitySurvey)
 	return result, "generate ref", err
 }
+
+func (s *SurveyService) DeleteSurvey(ref string) (bool, error) {
+	result, err := s.repo.DeleteSurvey(ref)
+	if err != nil {
+		return false, err
+	}
+	return result, nil
+}

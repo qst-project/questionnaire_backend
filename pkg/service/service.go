@@ -6,10 +6,10 @@ import (
 )
 
 type Survey interface {
-	GetSurvey(id string) (*api.Survey, error)
+	GetSurvey(ref string) (*api.Survey, error)
 	SetSurvey(survey *api.Survey) (bool, string, error)
 	// Update
-	// Delete
+	DeleteSurvey(ref string) (bool, error)
 }
 
 type Service struct {

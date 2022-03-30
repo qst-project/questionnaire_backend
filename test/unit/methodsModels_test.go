@@ -55,22 +55,6 @@ func (em *UtilitySurvey) From(gRRCModel *api.Survey) {
 		modelTextPossibleAnswer.From(textPossibleAnswer)
 		em.TextPossibleAnswers = append(em.TextPossibleAnswers, &modelTextPossibleAnswer)
 	}
-
-	for _, radioAnswer := range gRRCModel.GetRadioAnswers() {
-		var modelRadioAnswer models.RadioAnswer
-		modelRadioAnswer.From(radioAnswer)
-		em.RadioAnswers = append(em.RadioAnswers, &modelRadioAnswer)
-	}
-	for _, checkboxAnswer := range gRRCModel.GetCheckboxAnswers() {
-		var modelCheckboxAnswer models.CheckboxAnswer
-		modelCheckboxAnswer.From(checkboxAnswer)
-		em.CheckboxAnswers = append(em.CheckboxAnswers, &modelCheckboxAnswer)
-	}
-	for _, textAnswer := range gRRCModel.GetTextAnswers() {
-		var modelTextAnswer models.TextAnswer
-		modelTextAnswer.From(textAnswer)
-		em.TextAnswers = append(em.TextAnswers, &modelTextAnswer)
-	}
 }
 
 func TestTransformApiSurveyToUtility(t *testing.T) {
@@ -90,15 +74,6 @@ func TestTransformApiSurveyToUtility(t *testing.T) {
 		},
 		TextPossibleAnswers: []*api.TextPossibleAnswer{
 			{Id: "1", Text: "Great", QuestionId: "1", Placeholder: "Ответь здесь..."},
-		},
-		RadioAnswers: []*api.RadioAnswer{
-			{Id: "1", RadioPossibleAnswerId: "1"},
-		},
-		CheckboxAnswers: []*api.CheckboxAnswer{
-			{Id: "1", CheckboxPossibleAnswerId: "1"},
-		},
-		TextAnswers: []*api.TextAnswer{
-			{Id: "1", TextPossibleAnswerId: "1", Answer: "Bad"},
 		},
 	}
 

@@ -22,7 +22,7 @@ func (h *RequestHandler) GetSurvey(ctx context.Context, req *api.GetSurveyReques
 	ref := req.GetRef()
 	survey, err := h.service.GetSurvey(ref)
 	if err != nil {
-		return nil, err
+		return &api.GetSurveyResponse{Survey: nil}, err
 	}
 	return &api.GetSurveyResponse{Survey: survey}, nil
 }
@@ -31,9 +31,18 @@ func (h *RequestHandler) SetSurvey(ctx context.Context, req *api.CreateSurveyReq
 	survey := req.GetSurvey()
 	result, ref, err := h.service.SetSurvey(survey)
 	if err != nil {
-		return nil, err
+		return &api.CreateSurveyResponse{Result: false, Ref: ""}, err
 	}
 	return &api.CreateSurveyResponse{Result: result, Ref: ref}, nil
+}
+
+func (h *RequestHandler) DeleteSurvey(ctx context.Context, req *api.DeleteSurveyRequest) (*api.DeleteSurveyResponse, error) {
+	ref := req.GetRef()
+	result, err := h.service.DeleteSurvey(ref)
+	if err != nil {
+		return &api.DeleteSurveyResponse{Result: false}, err
+	}
+	return &api.DeleteSurveyResponse{Result: result}, nil
 }
 
 func NewGrpcHandler(service *service.Service) (Handler, error) {

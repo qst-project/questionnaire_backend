@@ -7,6 +7,8 @@ service Questionnaire {
   rpc Test(TestRequest) returns (TestResponse) {};
   rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {};
   rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {};
+  rpc UpdateSurvey(UpdateSurveyRequest) returns (UpdateSurveyResponse) {};
+  rpc DeleteSurvey(DeleteSurveyRequest) returns (DeleteSurveyResponse) {};
 }
 
 message TestRequest {
@@ -94,4 +96,20 @@ message CreateSurveyRequest {
 message CreateSurveyResponse {
   bool result = 1;
   string ref = 2;
+}
+
+message UpdateSurveyRequest {
+  Survey survey = 1;
+}
+
+message UpdateSurveyResponse {
+  bool result = 1;
+}
+
+message DeleteSurveyRequest {
+  string ref = 1;
+}
+
+message DeleteSurveyResponse {
+  bool result = 1;
 }
