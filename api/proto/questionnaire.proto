@@ -6,7 +6,7 @@ package api;
 service Questionnaire {
   rpc Test(TestRequest) returns (TestResponse) {};
   rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {};
-  rpc SetSurvey(SetSurveyRequest) return (SetSurveyResponse) {};
+  rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {};
 }
 
 message TestRequest {
@@ -28,12 +28,14 @@ message Survey {
   repeated RadioAnswer RadioAnswers = 8;
   repeated CheckboxAnswer CheckboxAnswers = 9;
   repeated TextAnswer TextAnswers = 10;
+}
 
-  message Question {
+message Question {
     string Id = 1;
-    string Text = 2;
-    string Order = 3;
-    string Kind = 4;
+    string QuestionnaireId = 2;
+    string Text = 3;
+    string Order = 4;
+    string Kind = 5;
   }
 
   message RadioPossibleAnswer {
@@ -70,7 +72,6 @@ message Survey {
     string Answer = 2;
     string TextPossibleAnswerId = 3;
   }
-}
 
 message GetSurveyRequest {
   string ref = 1;
@@ -80,11 +81,11 @@ message GetSurveyResponse {
   Survey survey = 1;
 }
 
-message SetSurveyRequest {
+message CreateSurveyRequest {
   Survey survey = 1;
 }
 
-message SetSurveyResponse {
+message CreateSurveyResponse {
   bool result = 1;
   string ref = 2;
 }

@@ -2,10 +2,8 @@ package grpc
 
 import (
 	"context"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/configs"
-	// "github.com/skinnykaen/quesionnaire_backend.git/pkg/repository"
-	// "github.com/skinnykaen/quesionnaire_backend.git/pkg/service"
+	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/configs"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"net"

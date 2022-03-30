@@ -1,4 +1,4 @@
-module github.com/skinnykaen/quesionnaire_backend.git
+module github.com/qst-project/backend.git
 
 go 1.13
 

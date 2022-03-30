@@ -1,10 +1,10 @@
 package pkg
 
 import (
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/configs"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/grpc"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/repository"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/service"
+	"github.com/qst-project/backend.git/pkg/configs"
+	"github.com/qst-project/backend.git/pkg/grpc"
+	"github.com/qst-project/backend.git/pkg/repository"
+	"github.com/qst-project/backend.git/pkg/service"
 	"go.uber.org/fx"
 )
 

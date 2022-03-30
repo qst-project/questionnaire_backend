@@ -1,14 +1,13 @@
 package service
 
 import (
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/repository"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/repository"
 )
 
-
 type Survey interface {
-	GetSurvey(id string) (api.Survey, error)
-	SetSurvey(servey api.Survey) (bool, string, error)
+	GetSurvey(id string) (*api.Survey, error)
+	SetSurvey(survey *api.Survey) (bool, string, error)
 	// Update
 	// Delete
 }
@@ -16,6 +15,7 @@ type Survey interface {
 type Service struct {
 	Survey
 }
+
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Survey: NewSurveyService(repos),

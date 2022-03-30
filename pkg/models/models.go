@@ -2,7 +2,6 @@ package models
 
 import (
 	"gorm.io/gorm"
-	"github.com/lib/pq"
 )
 
 // type User struct {
@@ -12,16 +11,16 @@ import (
 
 type Questionnaire struct {
 	gorm.Model
-	Title  	string `gorm:"not null;size:256"`
-	Ref 	string `gorm:"not null;size:256"`
+	Title string `gorm:"not null;size:256"`
+	Ref   string `gorm:"not null;size:256"`
 }
 
 type Question struct {
 	gorm.Model
 	QuestionnaireId uint
 	Questionnaire   Questionnaire `gorm:"foreignKey:QuestionnaireId;references:ID"`
-	Order          	string `gorm:"not null;size:256"`
-	Kind           	string `gorm:"not null;size:2"`
+	Order           string        `gorm:"not null;size:256"`
+	Kind            string        `gorm:"not null;size:2"`
 	Text            string        `gorm:"size:256;not null"`
 }
 
@@ -64,4 +63,15 @@ type TextAnswer struct {
 	TextPossibleAnswerId uint
 	TextPossibleAnswer   TextPossibleAnswer `gorm:"foreignKey:TextPossibleAnswerId;references:ID"`
 	Answer               string             `gorm:"size:256;not null"`
+}
+
+type UtilitySurvey struct {
+	Questionnaire           Questionnaire
+	Questions               []*Question
+	RadioPossibleAnswers    []*RadioPossibleAnswer
+	CheckboxPossibleAnswers []*CheckboxPossibleAnswer
+	TextPossibleAnswers     []*TextPossibleAnswer
+	RadioAnswers            []*RadioAnswer
+	CheckboxAnswers         []*CheckboxAnswer
+	TextAnswers             []*TextAnswer
 }

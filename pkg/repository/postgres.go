@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/configs"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/models"
+	"github.com/qst-project/backend.git/pkg/configs"
+	"github.com/qst-project/backend.git/pkg/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

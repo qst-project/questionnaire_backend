@@ -19,7 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionnaireClient interface {
 	Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error)
-	GetSurvey(ctx context.Context, in *SurveyRequest, opts ...grpc.CallOption) (*SurveyResponse, error)
+	GetSurvey(ctx context.Context, in *GetSurveyRequest, opts ...grpc.CallOption) (*GetSurveyResponse, error)
+	CreateSurvey(ctx context.Context, in *CreateSurveyRequest, opts ...grpc.CallOption) (*CreateSurveyResponse, error)
 }
 
 type questionnaireClient struct {
@@ -39,9 +40,18 @@ func (c *questionnaireClient) Test(ctx context.Context, in *TestRequest, opts ..
 	return out, nil
 }
 
-func (c *questionnaireClient) GetSurvey(ctx context.Context, in *SurveyRequest, opts ...grpc.CallOption) (*SurveyResponse, error) {
-	out := new(SurveyResponse)
+func (c *questionnaireClient) GetSurvey(ctx context.Context, in *GetSurveyRequest, opts ...grpc.CallOption) (*GetSurveyResponse, error) {
+	out := new(GetSurveyResponse)
 	err := c.cc.Invoke(ctx, "/api.Questionnaire/GetSurvey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *questionnaireClient) CreateSurvey(ctx context.Context, in *CreateSurveyRequest, opts ...grpc.CallOption) (*CreateSurveyResponse, error) {
+	out := new(CreateSurveyResponse)
+	err := c.cc.Invoke(ctx, "/api.Questionnaire/CreateSurvey", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +63,8 @@ func (c *questionnaireClient) GetSurvey(ctx context.Context, in *SurveyRequest, 
 // for forward compatibility
 type QuestionnaireServer interface {
 	Test(context.Context, *TestRequest) (*TestResponse, error)
-	GetSurvey(context.Context, *SurveyRequest) (*SurveyResponse, error)
+	GetSurvey(context.Context, *GetSurveyRequest) (*GetSurveyResponse, error)
+	CreateSurvey(context.Context, *CreateSurveyRequest) (*CreateSurveyResponse, error)
 	mustEmbedUnimplementedQuestionnaireServer()
 }
 
@@ -64,8 +75,11 @@ type UnimplementedQuestionnaireServer struct {
 func (UnimplementedQuestionnaireServer) Test(context.Context, *TestRequest) (*TestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
 }
-func (UnimplementedQuestionnaireServer) GetSurvey(context.Context, *SurveyRequest) (*SurveyResponse, error) {
+func (UnimplementedQuestionnaireServer) GetSurvey(context.Context, *GetSurveyRequest) (*GetSurveyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSurvey not implemented")
+}
+func (UnimplementedQuestionnaireServer) CreateSurvey(context.Context, *CreateSurveyRequest) (*CreateSurveyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSurvey not implemented")
 }
 func (UnimplementedQuestionnaireServer) mustEmbedUnimplementedQuestionnaireServer() {}
 
@@ -99,7 +113,7 @@ func _Questionnaire_Test_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _Questionnaire_GetSurvey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SurveyRequest)
+	in := new(GetSurveyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -111,7 +125,25 @@ func _Questionnaire_GetSurvey_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/api.Questionnaire/GetSurvey",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QuestionnaireServer).GetSurvey(ctx, req.(*SurveyRequest))
+		return srv.(QuestionnaireServer).GetSurvey(ctx, req.(*GetSurveyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Questionnaire_CreateSurvey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSurveyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionnaireServer).CreateSurvey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.Questionnaire/CreateSurvey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionnaireServer).CreateSurvey(ctx, req.(*CreateSurveyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -130,6 +162,10 @@ var Questionnaire_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSurvey",
 			Handler:    _Questionnaire_GetSurvey_Handler,
+		},
+		{
+			MethodName: "CreateSurvey",
+			Handler:    _Questionnaire_CreateSurvey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -2,8 +2,8 @@ package test
 
 import (
 	"context"
-	"github.com/skinnykaen/quesionnaire_backend.git/pkg/api"
-	. "github.com/skinnykaen/quesionnaire_backend.git/pkg/grpc"
+	"github.com/qst-project/backend.git/pkg/api"
+	. "github.com/qst-project/backend.git/pkg/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/test/bufconn"
 	"log"
