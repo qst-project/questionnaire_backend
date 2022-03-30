@@ -4,11 +4,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// type User struct {
-// 	gorm.Model
-// 	GoogleId string `gorm:"not null;unique"`
-// }
-
 type Questionnaire struct {
 	gorm.Model
 	Title string `gorm:"not null;size:256"`
@@ -31,23 +26,11 @@ type RadioPossibleAnswer struct {
 	Text       string   `gorm:"size:256;not null"`
 }
 
-type RadioAnswer struct {
-	gorm.Model
-	RadioPossibleAnswerId uint
-	RadioPossibleAnswer   RadioPossibleAnswer `gorm:"foreignKey:RadioPossibleAnswerId;references:ID"`
-}
-
 type CheckboxPossibleAnswer struct {
 	gorm.Model
 	QuestionId uint
 	Question   Question `gorm:"foreignKey:QuestionId;references:ID"`
 	Text       string   `gorm:"size:256;not null"`
-}
-
-type CheckboxAnswer struct {
-	gorm.Model
-	CheckboxPossibleAnswerId uint
-	CheckboxPossibleAnswer   CheckboxPossibleAnswer `gorm:"foreignKey:CheckboxPossibleAnswerId;references:ID"`
 }
 
 type TextPossibleAnswer struct {
@@ -58,8 +41,32 @@ type TextPossibleAnswer struct {
 	Placeholder string   `gorm:"size:256;"`
 }
 
+type RadioAnswer struct {
+	gorm.Model
+	QuestionnaireId       uint
+	Questionnaire         Questionnaire `gorm:"foreignKey:QuestionnaireId;references:ID"`
+	QuestionId            uint
+	Question              Question `gorm:"foreignKey:QuestionId;references:ID"`
+	RadioPossibleAnswerId uint
+	RadioPossibleAnswer   RadioPossibleAnswer `gorm:"foreignKey:RadioPossibleAnswerId;references:ID"`
+}
+
+type CheckboxAnswer struct {
+	gorm.Model
+	QuestionnaireId          uint
+	Questionnaire            Questionnaire `gorm:"foreignKey:QuestionnaireId;references:ID"`
+	QuestionId               uint
+	Question                 Question `gorm:"foreignKey:QuestionId;references:ID"`
+	CheckboxPossibleAnswerId uint
+	CheckboxPossibleAnswer   CheckboxPossibleAnswer `gorm:"foreignKey:CheckboxPossibleAnswerId;references:ID"`
+}
+
 type TextAnswer struct {
 	gorm.Model
+	QuestionnaireId      uint
+	Questionnaire        Questionnaire `gorm:"foreignKey:QuestionnaireId;references:ID"`
+	QuestionId           uint
+	Question             Question `gorm:"foreignKey:QuestionId;references:ID"`
 	TextPossibleAnswerId uint
 	TextPossibleAnswer   TextPossibleAnswer `gorm:"foreignKey:TextPossibleAnswerId;references:ID"`
 	Answer               string             `gorm:"size:256;not null"`
@@ -71,7 +78,7 @@ type UtilitySurvey struct {
 	RadioPossibleAnswers    []*RadioPossibleAnswer
 	CheckboxPossibleAnswers []*CheckboxPossibleAnswer
 	TextPossibleAnswers     []*TextPossibleAnswer
-	RadioAnswers            []*RadioAnswer
-	CheckboxAnswers         []*CheckboxAnswer
-	TextAnswers             []*TextAnswer
+	//RadioAnswers            []*RadioAnswer
+	//CheckboxAnswers         []*CheckboxAnswer
+	//TextAnswers             []*TextAnswer
 }

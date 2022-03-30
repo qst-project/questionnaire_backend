@@ -25,9 +25,9 @@ message Survey {
   repeated RadioPossibleAnswer RadioPossibleAnswers = 5;
   repeated CheckboxPossibleAnswer CheckboxPossibleAnswers = 6;
   repeated TextPossibleAnswer TextPossibleAnswers = 7;
-  repeated RadioAnswer RadioAnswers = 8;
-  repeated CheckboxAnswer CheckboxAnswers = 9;
-  repeated TextAnswer TextAnswers = 10;
+//  repeated RadioAnswer RadioAnswers = 8;
+//  repeated CheckboxAnswer CheckboxAnswers = 9;
+//  repeated TextAnswer TextAnswers = 10;
 }
 
 message Question {
@@ -44,20 +44,10 @@ message Question {
     string QuestionId = 3;
   }
 
-  message RadioAnswer {
-    string Id = 1;
-    string RadioPossibleAnswerId = 2;
-  }
-
   message CheckboxPossibleAnswer {
     string Id = 1;
     string Text = 2;
     string QuestionId = 3;
-  }
-
-  message CheckboxAnswer {
-    string Id = 1;
-    string CheckboxPossibleAnswerId = 2;
   }
 
   message TextPossibleAnswer {
@@ -67,10 +57,26 @@ message Question {
     string Placeholder = 4;
   }
 
+  message RadioAnswer {
+    string Id = 1;
+    string QuestionnaireId = 2;
+    string QuestionId = 3;
+    string RadioPossibleAnswer = 4;
+  }
+
+  message CheckboxAnswer {
+    string Id = 1;
+    string QuestionnaireId = 2;
+    string QuestionId = 3;
+    string CheckboxPossibleAnswer = 4;
+  }
+
   message TextAnswer {
     string Id = 1;
     string Answer = 2;
-    string TextPossibleAnswerId = 3;
+    string QuestionnaireId = 3;
+    string QuestionId = 4;
+    string TextPossibleAnswer = 5;
   }
 
 message GetSurveyRequest {

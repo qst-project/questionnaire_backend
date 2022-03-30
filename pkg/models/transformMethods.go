@@ -125,8 +125,10 @@ func (em *TextPossibleAnswer) From(gRRCModel *api.TextPossibleAnswer) {
 
 func (em *RadioAnswer) GetgRPCModel() api.RadioAnswer {
 	return api.RadioAnswer{
-		Id:                    strconv.FormatUint(uint64(em.ID), 10),
-		RadioPossibleAnswerId: strconv.FormatUint(uint64(em.RadioPossibleAnswerId), 10),
+		Id:                  strconv.FormatUint(uint64(em.ID), 10),
+		QuestionId:          strconv.FormatUint(uint64(em.QuestionId), 10),
+		QuestionnaireId:     strconv.FormatUint(uint64(em.QuestionnaireId), 10),
+		RadioPossibleAnswer: strconv.FormatUint(uint64(em.RadioPossibleAnswerId), 10),
 	}
 }
 
@@ -135,7 +137,7 @@ func (em *RadioAnswer) From(gRRCModel *api.RadioAnswer) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	RadioPossibleAnswerId, err := strconv.ParseUint(gRRCModel.RadioPossibleAnswerId, 10, 64)
+	RadioPossibleAnswerId, err := strconv.ParseUint(gRRCModel.RadioPossibleAnswer, 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -145,8 +147,10 @@ func (em *RadioAnswer) From(gRRCModel *api.RadioAnswer) {
 
 func (em *CheckboxAnswer) GetgRPCModel() api.CheckboxAnswer {
 	return api.CheckboxAnswer{
-		Id:                       strconv.FormatUint(uint64(em.ID), 10),
-		CheckboxPossibleAnswerId: strconv.FormatUint(uint64(em.CheckboxPossibleAnswerId), 10),
+		Id:                     strconv.FormatUint(uint64(em.ID), 10),
+		QuestionId:             strconv.FormatUint(uint64(em.QuestionId), 10),
+		QuestionnaireId:        strconv.FormatUint(uint64(em.QuestionnaireId), 10),
+		CheckboxPossibleAnswer: strconv.FormatUint(uint64(em.CheckboxPossibleAnswerId), 10),
 	}
 }
 
@@ -155,7 +159,7 @@ func (em *CheckboxAnswer) From(gRRCModel *api.CheckboxAnswer) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	CheckboxPossibleAnswerId, err := strconv.ParseUint(gRRCModel.CheckboxPossibleAnswerId, 10, 64)
+	CheckboxPossibleAnswerId, err := strconv.ParseUint(gRRCModel.CheckboxPossibleAnswer, 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -165,8 +169,10 @@ func (em *CheckboxAnswer) From(gRRCModel *api.CheckboxAnswer) {
 
 func (em *TextAnswer) GetgRPCModel() api.TextAnswer {
 	return api.TextAnswer{
-		Id:                   strconv.FormatUint(uint64(em.ID), 10),
-		TextPossibleAnswerId: strconv.FormatUint(uint64(em.TextPossibleAnswerId), 10),
+		Id:                 strconv.FormatUint(uint64(em.ID), 10),
+		QuestionId:         strconv.FormatUint(uint64(em.QuestionId), 10),
+		QuestionnaireId:    strconv.FormatUint(uint64(em.QuestionnaireId), 10),
+		TextPossibleAnswer: strconv.FormatUint(uint64(em.TextPossibleAnswerId), 10),
 	}
 }
 
@@ -175,7 +181,7 @@ func (em *TextAnswer) From(gRRCModel *api.TextAnswer) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	TextPossibleAnswerId, err := strconv.ParseUint(gRRCModel.TextPossibleAnswerId, 10, 64)
+	TextPossibleAnswerId, err := strconv.ParseUint(gRRCModel.TextPossibleAnswer, 10, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -209,21 +215,21 @@ func (em *UtilitySurvey) From(gRRCModel *api.Survey) {
 		em.TextPossibleAnswers = append(em.TextPossibleAnswers, &modelTextPossibleAnswer)
 	}
 
-	for _, radioAnswer := range gRRCModel.GetRadioAnswers() {
-		var modelRadioAnswer RadioAnswer
-		modelRadioAnswer.From(radioAnswer)
-		em.RadioAnswers = append(em.RadioAnswers, &modelRadioAnswer)
-	}
-	for _, checkboxAnswer := range gRRCModel.GetCheckboxAnswers() {
-		var modelCheckboxAnswer CheckboxAnswer
-		modelCheckboxAnswer.From(checkboxAnswer)
-		em.CheckboxAnswers = append(em.CheckboxAnswers, &modelCheckboxAnswer)
-	}
-	for _, textAnswer := range gRRCModel.GetTextAnswers() {
-		var modelTextAnswer TextAnswer
-		modelTextAnswer.From(textAnswer)
-		em.TextAnswers = append(em.TextAnswers, &modelTextAnswer)
-	}
+	//for _, radioAnswer := range gRRCModel.GetRadioAnswers() {
+	//	var modelRadioAnswer RadioAnswer
+	//	modelRadioAnswer.From(radioAnswer)
+	//	em.RadioAnswers = append(em.RadioAnswers, &modelRadioAnswer)
+	//}
+	//for _, checkboxAnswer := range gRRCModel.GetCheckboxAnswers() {
+	//	var modelCheckboxAnswer CheckboxAnswer
+	//	modelCheckboxAnswer.From(checkboxAnswer)
+	//	em.CheckboxAnswers = append(em.CheckboxAnswers, &modelCheckboxAnswer)
+	//}
+	//for _, textAnswer := range gRRCModel.GetTextAnswers() {
+	//	var modelTextAnswer TextAnswer
+	//	modelTextAnswer.From(textAnswer)
+	//	em.TextAnswers = append(em.TextAnswers, &modelTextAnswer)
+	//}
 }
 
 func (em *UtilitySurvey) GetgRPCModel() api.Survey {
@@ -251,18 +257,18 @@ func (em *UtilitySurvey) GetgRPCModel() api.Survey {
 		apiSurvey.TextPossibleAnswers = append(apiSurvey.TextPossibleAnswers, &apiTextPossibleAnswer)
 	}
 
-	for _, modelRadioAnswer := range em.RadioAnswers {
-		apiRadioAnswer := modelRadioAnswer.GetgRPCModel()
-		apiSurvey.RadioAnswers = append(apiSurvey.RadioAnswers, &apiRadioAnswer)
-	}
-	for _, modelCheckboxAnswer := range em.CheckboxAnswers {
-		apiCheckboxAnswer := modelCheckboxAnswer.GetgRPCModel()
-		apiSurvey.CheckboxAnswers = append(apiSurvey.CheckboxAnswers, &apiCheckboxAnswer)
-	}
-	for _, modelTextAnswer := range em.TextAnswers {
-		apiTextAnswer := modelTextAnswer.GetgRPCModel()
-		apiSurvey.TextAnswers = append(apiSurvey.TextAnswers, &apiTextAnswer)
-	}
+	//for _, modelRadioAnswer := range em.RadioAnswers {
+	//	apiRadioAnswer := modelRadioAnswer.GetgRPCModel()
+	//	apiSurvey.RadioAnswers = append(apiSurvey.RadioAnswers, &apiRadioAnswer)
+	//}
+	//for _, modelCheckboxAnswer := range em.CheckboxAnswers {
+	//	apiCheckboxAnswer := modelCheckboxAnswer.GetgRPCModel()
+	//	apiSurvey.CheckboxAnswers = append(apiSurvey.CheckboxAnswers, &apiCheckboxAnswer)
+	//}
+	//for _, modelTextAnswer := range em.TextAnswers {
+	//	apiTextAnswer := modelTextAnswer.GetgRPCModel()
+	//	apiSurvey.TextAnswers = append(apiSurvey.TextAnswers, &apiTextAnswer)
+	//}
 
 	return apiSurvey
 }
