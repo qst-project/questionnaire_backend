@@ -7,8 +7,8 @@ type Config struct {
 
 func NewConfig() (config Config, err error) {
 	config = Config{
-		PostgresDsn: "host=localhost port=5432 user=questionnaire password=test dbname=questionnaire_test",
-		GrpcTcpPort: ":9090",
+		PostgresDsn: "host=localhost port=5432 user=questionnaire password=12345 dbname=questionnaire_backend",
+		GrpcTcpPort: ":9091",
 	}
 	return
 }
