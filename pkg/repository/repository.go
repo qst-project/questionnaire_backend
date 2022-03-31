@@ -5,9 +5,10 @@ import (
 )
 
 type Survey interface {
-	SetSurvey(survey models.UtilitySurvey) (bool, error)
 	GetSurvey(ref string) (models.UtilitySurvey, error)
+	CreateSurvey(survey models.UtilitySurvey) (bool, error)
 	DeleteSurvey(ref string) (bool, error)
+	UpdateSurvey(survey models.UtilitySurvey) (bool, error)
 }
 
 type Repository struct {

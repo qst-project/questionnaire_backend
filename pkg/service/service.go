@@ -7,9 +7,9 @@ import (
 
 type Survey interface {
 	GetSurvey(ref string) (*api.Survey, error)
-	SetSurvey(survey *api.Survey) (bool, string, error)
-	// Update
+	CreateSurvey(survey *api.Survey) (bool, string, error)
 	DeleteSurvey(ref string) (bool, error)
+	UpdateSurvey(survey *api.Survey) (bool, error)
 }
 
 type Service struct {

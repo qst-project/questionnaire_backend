@@ -16,15 +16,21 @@ func NewSurveyService(repo *repository.Repository) *SurveyService {
 
 func (s *SurveyService) GetSurvey(ref string) (*api.Survey, error) {
 	utilitySurvey, err := s.repo.GetSurvey(ref)
+	if err != nil {
+		return nil, err
+	}
 	apiSurvey := utilitySurvey.GetgRPCModel()
-	return &apiSurvey, err
+	return &apiSurvey, nil
 }
 
-func (s *SurveyService) SetSurvey(survey *api.Survey) (bool, string, error) {
+func (s *SurveyService) CreateSurvey(survey *api.Survey) (bool, string, error) {
 	var utilitySurvey models.UtilitySurvey
 	utilitySurvey.From(survey)
-	result, err := s.repo.SetSurvey(utilitySurvey)
-	return result, "generate ref", err
+	result, err := s.repo.CreateSurvey(utilitySurvey)
+	if err != nil {
+		return false, "", err
+	}
+	return result, "generate ref", nil
 }
 
 func (s *SurveyService) DeleteSurvey(ref string) (bool, error) {
@@ -33,4 +39,11 @@ func (s *SurveyService) DeleteSurvey(ref string) (bool, error) {
 		return false, err
 	}
 	return result, nil
+}
+
+func (s *SurveyService) UpdateSurvey(survey *api.Survey) (bool, error) {
+	var utilitySurvey models.UtilitySurvey
+	utilitySurvey.From(survey)
+	result, err := s.repo.UpdateSurvey(utilitySurvey)
+	return result, err
 }

@@ -16,36 +16,32 @@ func main() {
 	}
 	c := api.NewQuestionnaireClient(conn)
 
-	//survey := &api.Survey{
-	//	Id:    "2",
-	//	Ref:   "/testRef",
-	//	Title: "Test Request",
-	//	Questions: []*api.Question{
-	//		{Id: "1344", QuestionnaireId: "2", Text: "How are you?", Order: "1", Kind: "1"},
-	//	},
-	//	RadioPossibleAnswers: []*api.RadioPossibleAnswer{
-	//		{Id: "143", Text: "Great", QuestionId: "1344"},
-	//	},
-	//	CheckboxPossibleAnswers: []*api.CheckboxPossibleAnswer{
-	//		{Id: "14334", Text: "Great", QuestionId: "1344"},
-	//	},
-	//	TextPossibleAnswers: []*api.TextPossibleAnswer{
-	//		{Id: "34341", Text: "Great", QuestionId: "1344", Placeholder: "Ответь здесь..."},
-	//	},
-	//	RadioAnswers: []*api.RadioAnswer{
-	//		{Id: "1334", RadioPossibleAnswerId: "143"},
-	//	},
-	//	CheckboxAnswers: []*api.CheckboxAnswer{
-	//		{Id: "1343", CheckboxPossibleAnswerId: "14334"},
-	//	},
-	//	TextAnswers: []*api.TextAnswer{
-	//		{Id: "1343", TextPossibleAnswerId: "34341", Answer: "Bad"},
-	//	},
-	//}
+	survey := &api.Survey{
+		Id:    "22",
+		Ref:   "/testQuestionnaire",
+		Title: "Update Test Title",
+		Questions: []*api.Question{
+			{Id: "221", QuestionnaireId: "22", Text: "Сколько ты зарабатываешь?", Order: "1", Kind: "1"},
+			{Id: "222", QuestionnaireId: "22", Text: "Кто был президентом России?", Order: "2", Kind: "2"},
+		},
+		RadioPossibleAnswers: []*api.RadioPossibleAnswer{
+			{Id: "221", Text: ">100.000", QuestionId: "221"},
+			{Id: "222", Text: "<100.000", QuestionId: "221"},
+		},
+		CheckboxPossibleAnswers: []*api.CheckboxPossibleAnswer{
+			{Id: "221", Text: "Путин", QuestionId: "222"},
+			{Id: "222", Text: "Лукашенко", QuestionId: "222"},
+			{Id: "223", Text: "Ельцин", QuestionId: "222"},
+		},
+	}
 
 	testRes, testResErr := c.Test(context.Background(), &api.TestRequest{})
-	getSurveyRes, getSurveyErr := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "TestRef"})
-	//setSurveyRes, setSurveyResErr := c.CreateSurvey(context.Background(), &api.CreateSurveyRequest{Survey: survey})
+	//getSurveyRes, getSurveyErr := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
+	//createSurveyRes, createSurveyErr := c.CreateSurvey(context.Background(), &api.CreateSurveyRequest{Survey: survey})
+	//getSurveyRes2, getSurveyErr2 := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
+	//deleteSurveyRes, deleteSurveyErr := c.DeleteSurvey(context.Background(), &api.DeleteSurveyRequest{Ref: "/testQuestionnaire"})
+	updateSurveyRes, updateSurveyErr := c.UpdateSurvey(context.Background(), &api.UpdateSurveyRequest{Survey: survey})
+	getSurveyRes, getSurveyErr := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
 
 	if testResErr != nil {
 		log.Fatal(testResErr)
@@ -53,10 +49,22 @@ func main() {
 	if getSurveyErr != nil {
 		log.Fatal(getSurveyErr)
 	}
-	//if setSurveyRes != nil {
-	//	log.Fatal(setSurveyResErr)
+	//if createSurveyErr != nil {
+	//	log.Fatal(createSurveyErr)
 	//}
+	//if getSurveyErr2 != nil {
+	//	log.Fatal(getSurveyErr2)
+	//}
+	//if deleteSurveyErr != nil {
+	//	log.Fatal(deleteSurveyErr)
+	//}
+	if updateSurveyErr != nil {
+		log.Fatal(updateSurveyErr)
+	}
 	log.Println(testRes.GetResult())
-	log.Println(getSurveyRes.GetSurvey())
-	//log.Println(setSurveyRes.GetResult())
+	log.Println(getSurveyRes.GetSurvey().Title)
+	//log.Println(createSurveyRes.GetResult())
+	//log.Println(getSurveyRes2.GetSurvey())
+	//log.Println(deleteSurveyRes.GetResult())
+	log.Println(updateSurveyRes.GetResult())
 }

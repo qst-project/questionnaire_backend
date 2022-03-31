@@ -69,7 +69,7 @@ func (r *SurveyRepository) GetSurvey(ref string) (models.UtilitySurvey, error) {
 	return utilitySurvey, nil
 }
 
-func (r *SurveyRepository) SetSurvey(survey models.UtilitySurvey) (bool, error) {
+func (r *SurveyRepository) CreateSurvey(survey models.UtilitySurvey) (bool, error) {
 	if r.postgresClient.db.Create(&survey.Questionnaire).Error != nil {
 		return false, r.postgresClient.db.Create(&survey.Questionnaire).Error
 	}
@@ -118,6 +118,46 @@ func (r *SurveyRepository) DeleteSurvey(ref string) (bool, error) {
 	var deletedQuestionnaire models.Questionnaire
 	if r.postgresClient.db.Where("ref = ?", ref).Delete(&deletedQuestionnaire).Error != nil {
 		return false, r.postgresClient.db.Where("ref = ?", ref).Delete(&deletedQuestionnaire).Error
+	}
+	return true, nil
+}
+
+func (r *SurveyRepository) UpdateSurvey(utilitySurvey models.UtilitySurvey) (bool, error) {
+
+	err := r.postgresClient.db.Model(&utilitySurvey.Questionnaire).
+		Updates(models.Questionnaire{Ref: utilitySurvey.Questionnaire.Ref, Title: utilitySurvey.Questionnaire.Title}).Error
+	if err != nil {
+		return false, nil
+	}
+
+	for _, question := range utilitySurvey.Questions {
+		err := r.postgresClient.db.Model(&question).
+			Updates(models.Question{Order: question.Order, Kind: question.Kind, Text: question.Text}).Error
+		if err != nil {
+			return false, err
+		}
+	}
+
+	for _, radioPossibleAnswer := range utilitySurvey.RadioPossibleAnswers {
+		err := r.postgresClient.db.Model(&radioPossibleAnswer).
+			Updates(models.RadioPossibleAnswer{Text: radioPossibleAnswer.Text}).Error
+		if err != nil {
+			return false, err
+		}
+	}
+	for _, checkboxPossibleAnswer := range utilitySurvey.CheckboxPossibleAnswers {
+		err := r.postgresClient.db.Model(&checkboxPossibleAnswer).
+			Updates(models.CheckboxPossibleAnswer{Text: checkboxPossibleAnswer.Text}).Error
+		if err != nil {
+			return false, err
+		}
+	}
+	for _, textPossibleAnswer := range utilitySurvey.TextPossibleAnswers {
+		err := r.postgresClient.db.Model(&textPossibleAnswer).
+			Updates(models.TextPossibleAnswer{Text: textPossibleAnswer.Text}).Error
+		if err != nil {
+			return false, err
+		}
 	}
 	return true, nil
 }
