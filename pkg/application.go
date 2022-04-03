@@ -1,22 +1,21 @@
 package pkg
 
 import (
-	"github.com/qst-project/backend.git/pkg/configs"
-	"github.com/qst-project/backend.git/pkg/grpc"
-	"github.com/qst-project/backend.git/pkg/repository"
-	"github.com/qst-project/backend.git/pkg/service"
+	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/delegate"
+	"github.com/qst-project/backend.git/pkg/gateway"
 	"go.uber.org/fx"
 )
 
 func RunApp() {
 	app := fx.New(
 		fx.Provide(NewLogger),
-		fx.Provide(configs.NewConfig),
-		fx.Provide(repository.NewPostgresClient),
-		fx.Provide(repository.NewRepository),
-		fx.Provide(service.NewService),
-		fx.Provide(grpc.NewGrpcHandler),
-		fx.Invoke(grpc.RegisterGrpcServer),
+		fx.Provide(NewConfig),
+		fx.Provide(gateway.NewPostgresClient),
+		fx.Provide(gateway.NewGatewayModule),
+		fx.Provide(delegate.NewDelegateModule),
+		fx.Provide(api.NewGrpcHandler),
+		fx.Invoke(api.RegisterGrpcServer),
 	)
 	app.Run()
 }

@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-// simple grpc client simple to test server
+// simple grpc_handler client simple to test server
 
 func main() {
 	conn, err := grpc.Dial("localhost:9091", grpc.WithInsecure())
@@ -16,7 +16,7 @@ func main() {
 	}
 	c := api.NewQuestionnaireClient(conn)
 
-	survey := &api.Survey{
+	Questionnaire := &api.Questionnaire{
 		Id:    "22",
 		Ref:   "/testQuestionnaire",
 		Title: "Update Test Title",
@@ -36,35 +36,35 @@ func main() {
 	}
 
 	testRes, testResErr := c.Test(context.Background(), &api.TestRequest{})
-	//getSurveyRes, getSurveyErr := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
-	//createSurveyRes, createSurveyErr := c.CreateSurvey(context.Background(), &api.CreateSurveyRequest{Survey: survey})
-	//getSurveyRes2, getSurveyErr2 := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
-	//deleteSurveyRes, deleteSurveyErr := c.DeleteSurvey(context.Background(), &api.DeleteSurveyRequest{Ref: "/testQuestionnaire"})
-	updateSurveyRes, updateSurveyErr := c.UpdateSurvey(context.Background(), &api.UpdateSurveyRequest{Survey: survey})
-	getSurveyRes, getSurveyErr := c.GetSurvey(context.Background(), &api.GetSurveyRequest{Ref: "/testQuestionnaire"})
+	//getQuestionnaireRes, getQuestionnaireErr := c.GetQuestionnaire(context.Background(), &api.GetQuestionnaireRequest{Ref: "/testQuestionnaire"})
+	//createQuestionnaireRes, createQuestionnaireErr := c.CreateQuestionnaire(context.Background(), &api.CreateQuestionnaireRequest{QuestionnaireGateway: Questionnaire})
+	//getQuestionnaireRes2, getQuestionnaireErr2 := c.GetQuestionnaire(context.Background(), &api.GetQuestionnaireRequest{Ref: "/testQuestionnaire"})
+	//deleteQuestionnaireRes, deleteQuestionnaireErr := c.DeleteQuestionnaire(context.Background(), &api.DeleteQuestionnaireRequest{Ref: "/testQuestionnaire"})
+	updateQuestionnaireRes, updateQuestionnaireErr := c.UpdateQuestionnaire(context.Background(), &api.UpdateQuestionnaireRequest{Questionnaire: Questionnaire})
+	getQuestionnaireRes, getQuestionnaireErr := c.GetQuestionnaire(context.Background(), &api.GetQuestionnaireRequest{Ref: "/testQuestionnaire"})
 
 	if testResErr != nil {
 		log.Fatal(testResErr)
 	}
-	if getSurveyErr != nil {
-		log.Fatal(getSurveyErr)
+	if getQuestionnaireErr != nil {
+		log.Fatal(getQuestionnaireErr)
 	}
-	//if createSurveyErr != nil {
-	//	log.Fatal(createSurveyErr)
+	//if createQuestionnaireErr != nil {
+	//	log.Fatal(createQuestionnaireErr)
 	//}
-	//if getSurveyErr2 != nil {
-	//	log.Fatal(getSurveyErr2)
+	//if getQuestionnaireErr2 != nil {
+	//	log.Fatal(getQuestionnaireErr2)
 	//}
-	//if deleteSurveyErr != nil {
-	//	log.Fatal(deleteSurveyErr)
+	//if deleteQuestionnaireErr != nil {
+	//	log.Fatal(deleteQuestionnaireErr)
 	//}
-	if updateSurveyErr != nil {
-		log.Fatal(updateSurveyErr)
+	if updateQuestionnaireErr != nil {
+		log.Fatal(updateQuestionnaireErr)
 	}
 	log.Println(testRes.GetResult())
-	log.Println(getSurveyRes.GetSurvey().Title)
-	//log.Println(createSurveyRes.GetResult())
-	//log.Println(getSurveyRes2.GetSurvey())
-	//log.Println(deleteSurveyRes.GetResult())
-	log.Println(updateSurveyRes.GetResult())
+	log.Println(getQuestionnaireRes.GetQuestionnaire().Title)
+	//log.Println(createQuestionnaireRes.GetResult())
+	//log.Println(getQuestionnaireRes2.GetQuestionnaire())
+	//log.Println(deleteQuestionnaireRes.GetResult())
+	log.Println(updateQuestionnaireRes.GetResult())
 }

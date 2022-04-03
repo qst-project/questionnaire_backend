@@ -3,113 +3,45 @@ option go_package = "../../pkg/api";
 
 package api;
 
-service Questionnaire {
-  rpc Test(TestRequest) returns (TestResponse) {};
-  rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {};
-  rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {};
-  rpc UpdateSurvey(UpdateSurveyRequest) returns (UpdateSurveyResponse) {};
-  rpc DeleteSurvey(DeleteSurveyRequest) returns (DeleteSurveyResponse) {};
+service QuestionnaireService {
+  rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {};
 }
 
-message TestRequest {
-  string request = 1;
+message CreateQuestionnaireRequest {
+  Questionnaire Questionnaire = 1;
 }
 
-message  TestResponse {
-  string result = 1;
-}
-
-message Survey {
+message Questionnaire {
   string Id = 1;
   string Title = 2;
   string Ref = 3;
   repeated Question Questions = 4;
-  repeated RadioPossibleAnswer RadioPossibleAnswers = 5;
-  repeated CheckboxPossibleAnswer CheckboxPossibleAnswers = 6;
-  repeated TextPossibleAnswer TextPossibleAnswers = 7;
-//  repeated RadioAnswer RadioAnswers = 8;
-//  repeated CheckboxAnswer CheckboxAnswers = 9;
-//  repeated TextAnswer TextAnswers = 10;
 }
 
 message Question {
-    string Id = 1;
-    string QuestionnaireId = 2;
-    string Text = 3;
-    string Order = 4;
-    string Kind = 5;
-  }
+  string Id = 1;
+  string QuestionnaireId = 2;
+  string Statement = 3;
+  string Type = 5;
+  repeated  RadioPossibleAnswer RadioPossibleAnswers = 6;
+  repeated  CheckboxPossibleAnswer CheckboxPossibleAnswers = 7;
+  repeated  TextPossibleAnswer TextPossibleAnswers = 8;
+}
 
-  message RadioPossibleAnswer {
-    string Id = 1;
-    string Text = 2;
-    string QuestionId = 3;
-  }
+message RadioPossibleAnswer {
+  string Text = 1;
+}
 
-  message CheckboxPossibleAnswer {
-    string Id = 1;
-    string Text = 2;
-    string QuestionId = 3;
-  }
+message CheckboxPossibleAnswer {
+  string Text = 1;
+}
 
-  message TextPossibleAnswer {
-    string Id = 1;
-    string Text = 2;
-    string QuestionId = 3;
-    string Placeholder = 4;
-  }
+message TextPossibleAnswer {
+  string Text = 1;
+}
 
-  message RadioAnswer {
-    string Id = 1;
-    string QuestionnaireId = 2;
-    string QuestionId = 3;
-    string RadioPossibleAnswer = 4;
-  }
-
-  message CheckboxAnswer {
-    string Id = 1;
-    string QuestionnaireId = 2;
-    string QuestionId = 3;
-    string CheckboxPossibleAnswer = 4;
-  }
-
-  message TextAnswer {
-    string Id = 1;
-    string Answer = 2;
-    string QuestionnaireId = 3;
-    string QuestionId = 4;
-    string TextPossibleAnswer = 5;
-  }
-
-message GetSurveyRequest {
+message CreateQuestionnaireResponse {
   string ref = 1;
-}
-
-message GetSurveyResponse {
-  Survey survey = 1;
-}
-
-message CreateSurveyRequest {
-  Survey survey = 1;
-}
-
-message CreateSurveyResponse {
-  bool result = 1;
-  string ref = 2;
-}
-
-message UpdateSurveyRequest {
-  Survey survey = 1;
-}
-
-message UpdateSurveyResponse {
-  bool result = 1;
-}
-
-message DeleteSurveyRequest {
-  string ref = 1;
-}
-
-message DeleteSurveyResponse {
-  bool result = 1;
+  string err = 2;
+  int32 err_code = 3;
 }

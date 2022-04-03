@@ -1,4 +1,4 @@
-package configs
+package pkg
 
 type Config struct {
 	PostgresDsn string
@@ -7,7 +7,7 @@ type Config struct {
 
 func NewConfig() (config Config, err error) {
 	config = Config{
-		PostgresDsn: "host=localhost port=5432 user=questionnaire password=12345 dbname=questionnaire_backend",
+		PostgresDsn: "host=localhost port=5432 user=qst password=qst_pwd dbname=qst_db",
 		GrpcTcpPort: ":9091",
 	}
 	return

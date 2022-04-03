@@ -1,16 +1,15 @@
-package grpc
+package api
 
 import (
 	"context"
-	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/configs"
+	"github.com/qst-project/backend.git/pkg"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"net"
 )
 
 func RegisterGrpcServer(
-	lifecycle fx.Lifecycle, handler Handler, config configs.Config,
+	lifecycle fx.Lifecycle, handler Handler, config pkg.Config,
 ) {
 	lifecycle.Append(
 		fx.Hook{
@@ -20,7 +19,7 @@ func RegisterGrpcServer(
 					return
 				}
 				server := grpc.NewServer()
-				api.RegisterQuestionnaireServer(server, handler)
+				RegisterQuestionnaireServiceServer(server, handler)
 				if err = server.Serve(listener); err != nil {
 					return
 				}
