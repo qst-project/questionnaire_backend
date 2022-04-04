@@ -1,9 +1,19 @@
 package core
 
+type Id uint
+
 type Questionnaire struct {
-	Id    int
+	Id
 	Title string
 	Ref   string
+
+	Questions               []Question
+	RadioPossibleAnswers    []RadioPossibleAnswer
+	CheckboxPossibleAnswers []CheckboxPossibleAnswer
+	TextPossibleAnswers     []TextPossibleAnswer
+	//RadioAnswers            []*gateway.RadioAnswer
+	//CheckboxAnswers         []*gateway.CheckboxAnswer
+	//TextAnswers             []*gateway.TextAnswer
 }
 
 type Question struct {
@@ -47,15 +57,4 @@ type TextAnswer struct {
 	Question           Question
 	TextPossibleAnswer TextPossibleAnswer
 	Answer             string
-}
-
-type Questionnaire struct {
-	Questionnaire           Questionnaire
-	Questions               []Question
-	RadioPossibleAnswers    []RadioPossibleAnswer
-	CheckboxPossibleAnswers []CheckboxPossibleAnswer
-	TextPossibleAnswers     []TextPossibleAnswer
-	//RadioAnswers            []*gateway.RadioAnswer
-	//CheckboxAnswers         []*gateway.CheckboxAnswer
-	//TextAnswers             []*gateway.TextAnswer
 }

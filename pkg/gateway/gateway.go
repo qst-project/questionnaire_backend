@@ -6,7 +6,7 @@ import (
 
 type QuestionnaireGateway interface {
 	GetQuestionnaire(ref string) (core.Questionnaire, error)
-	CreateQuestionnaire(Questionnaire core.Questionnaire) (bool, error)
+	CreateQuestionnaire(Questionnaire core.Questionnaire) (string, error)
 	DeleteQuestionnaire(ref string) (bool, error)
 	UpdateQuestionnaire(Questionnaire core.Questionnaire) (bool, error)
 }
@@ -15,8 +15,8 @@ type Module struct {
 	QuestionnaireGateway
 }
 
-func NewGatewayModule(postgresClient PostgresClient) *Module {
+func Setup(postgresClient *PostgresClient) *Module {
 	return &Module{
-		QuestionnaireGateway: NewQuestionnaireGateway(&postgresClient),
+		QuestionnaireGateway: &QuestionnaireGatewayImpl{postgresClient: postgresClient},
 	}
 }

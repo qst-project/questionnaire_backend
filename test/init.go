@@ -26,8 +26,8 @@ func init() {
 		fx.Provide(pkg.NewLogger()),
 		fx.Provide(NewTestConfig),
 		fx.Provide(gateway.NewPostgresClient),
-		fx.Provide(gateway.NewGatewayModule),
-		fx.Provide(delegate.NewDelegateModule),
+		fx.Provide(gateway.Setup),
+		fx.Provide(delegate.Setup),
 		fx.Provide(api.NewGrpcHandler),
 		fx.Invoke(api.RegisterGrpcServer),
 	)
@@ -36,7 +36,7 @@ func init() {
 	logger := pkg.NewLogger()
 	config, _ := pkg.NewConfig()
 	postgresClient, _ := gateway.NewPostgresClient(config, logger)
-	repos := gateway.NewGatewayModule(postgresClient)
+	repos := gateway.Setup(postgresClient)
 	//serv := delegate.NewDelegateModule(repos)
 	//handler, _ := grpc_handler.NewGrpcHandler(serv)
 	//api.RegisterQuestionnaireServer(server, handler)

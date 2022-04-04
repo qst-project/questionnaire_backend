@@ -72,37 +72,37 @@ type Questionnaire struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id        string      `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Id        uint32      `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 	Title     string      `protobuf:"bytes,2,opt,name=Title,proto3" json:"Title,omitempty"`
 	Ref       string      `protobuf:"bytes,3,opt,name=Ref,proto3" json:"Ref,omitempty"`
 	Questions []*Question `protobuf:"bytes,4,rep,name=Questions,proto3" json:"Questions,omitempty"`
 }
 
-func (x *Questionnaire) Reset() {
-	*x = Questionnaire{}
+func (q *Questionnaire) Reset() {
+	*q = Questionnaire{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_questionnaire_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(q))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *Questionnaire) String() string {
-	return protoimpl.X.MessageStringOf(x)
+func (q *Questionnaire) String() string {
+	return protoimpl.X.MessageStringOf(q)
 }
 
 func (*Questionnaire) ProtoMessage() {}
 
-func (x *Questionnaire) ProtoReflect() protoreflect.Message {
+func (q *Questionnaire) ProtoReflect() protoreflect.Message {
 	mi := &file_questionnaire_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	if protoimpl.UnsafeEnabled && q != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(q))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
 		return ms
 	}
-	return mi.MessageOf(x)
+	return mi.MessageOf(q)
 }
 
 // Deprecated: Use Questionnaire.ProtoReflect.Descriptor instead.
@@ -110,30 +110,30 @@ func (*Questionnaire) Descriptor() ([]byte, []int) {
 	return file_questionnaire_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Questionnaire) GetId() string {
-	if x != nil {
-		return x.Id
+func (q *Questionnaire) GetId() uint32 {
+	if q != nil {
+		return q.Id
+	}
+	return 0
+}
+
+func (q *Questionnaire) GetTitle() string {
+	if q != nil {
+		return q.Title
 	}
 	return ""
 }
 
-func (x *Questionnaire) GetTitle() string {
-	if x != nil {
-		return x.Title
+func (q *Questionnaire) GetRef() string {
+	if q != nil {
+		return q.Ref
 	}
 	return ""
 }
 
-func (x *Questionnaire) GetRef() string {
-	if x != nil {
-		return x.Ref
-	}
-	return ""
-}
-
-func (x *Questionnaire) GetQuestions() []*Question {
-	if x != nil {
-		return x.Questions
+func (q *Questionnaire) GetQuestions() []*Question {
+	if q != nil {
+		return q.Questions
 	}
 	return nil
 }
@@ -448,7 +448,7 @@ var file_questionnaire_proto_rawDesc = []byte{
 	0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x6e, 0x61,
 	0x69, 0x72, 0x65, 0x52, 0x0d, 0x51, 0x75, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x6e, 0x61, 0x69,
 	0x72, 0x65, 0x22, 0x74, 0x0a, 0x0d, 0x51, 0x75, 0x65, 0x73, 0x74, 0x69, 0x6f, 0x6e, 0x6e, 0x61,
-	0x69, 0x72, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x69, 0x72, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52,
 	0x02, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x52, 0x65, 0x66,
 	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x52, 0x65, 0x66, 0x12, 0x2b, 0x0a, 0x09, 0x51,

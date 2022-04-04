@@ -1,23 +1,20 @@
 package delegate
 
 import (
-	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/gateway"
+	"github.com/qst-project/backend.git/pkg/usecase"
+	"go.uber.org/fx"
 )
 
-type Delegate interface {
-	GetQuestionnaire(ref string) (*api.Questionnaire, error)
-	CreateQuestionnaire(Questionnaire *api.Questionnaire) (string, error)
-	DeleteQuestionnaire(ref string) (bool, error)
-	UpdateQuestionnaire(Questionnaire *api.Questionnaire) (bool, error)
-}
-
 type Module struct {
-	Delegate
+	fx.Out
+
+	QuestionnaireDelegate
 }
 
-func NewDelegateModule(repos *gateway.Module) *Module {
-	return &Module{
-		Delegate: NewDelegate(repos),
+func Setup(createQuestionnaireUseCase usecase.CreateQuestionnaireUseCase) Module {
+	return Module{
+		fx.Out{},
+
+		QuestionnaireDelegate{createQuestionnaireUseCase},
 	}
 }

@@ -14,7 +14,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// QuestionnaireServiceClient is the client API for QuestionnaireService delegate_module.
+// QuestionnaireServiceClient is the client API for QuestionnaireService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionnaireServiceClient interface {
@@ -38,7 +38,7 @@ func (c *questionnaireServiceClient) CreateQuestionnaire(ctx context.Context, in
 	return out, nil
 }
 
-// QuestionnaireServiceServer is the server API for QuestionnaireService delegate_module.
+// QuestionnaireServiceServer is the server API for QuestionnaireService service.
 // All implementations must embed UnimplementedQuestionnaireServiceServer
 // for forward compatibility
 type QuestionnaireServiceServer interface {
@@ -55,7 +55,7 @@ func (UnimplementedQuestionnaireServiceServer) CreateQuestionnaire(context.Conte
 }
 func (UnimplementedQuestionnaireServiceServer) mustEmbedUnimplementedQuestionnaireServiceServer() {}
 
-// UnsafeQuestionnaireServiceServer may be embedded to opt out of forward compatibility for this delegate_module.
+// UnsafeQuestionnaireServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to QuestionnaireServiceServer will
 // result in compilation errors.
 type UnsafeQuestionnaireServiceServer interface {
@@ -84,7 +84,7 @@ func _QuestionnaireService_CreateQuestionnaire_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
-// QuestionnaireService_ServiceDesc is the grpc.ServiceDesc for QuestionnaireService delegate_module.
+// QuestionnaireService_ServiceDesc is the grpc.ServiceDesc for QuestionnaireService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var QuestionnaireService_ServiceDesc = grpc.ServiceDesc{

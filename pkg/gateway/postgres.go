@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"github.com/qst-project/backend.git/pkg"
-	"github.com/qst-project/backend.git/pkg/core"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -42,15 +41,15 @@ func NewPostgresClient(config pkg.Config, _logger *log.Logger) (postgresClient P
 
 func (c *PostgresClient) Migrate() (err error) {
 	err = c.db.AutoMigrate(
-		// &core.User{},
-		&core.QuestionDB{},
-		&core.QuestionnaireDB{},
-		&core.RadioPossibleAnswerDB{},
-		&core.TextPossibleAnswerDB{},
-		&core.CheckboxPossibleAnswerDB{},
-		&core.CheckboxAnswerDB{},
-		&core.RadioAnswerDB{},
-		&core.TextAnswerDB{},
+		//&User{},
+		&QuestionDB{},
+		&QuestionnaireDB{},
+		&RadioPossibleAnswerDB{},
+		&TextPossibleAnswerDB{},
+		&CheckboxPossibleAnswerDB{},
+		&CheckboxAnswerDB{},
+		&RadioAnswerDB{},
+		&TextAnswerDB{},
 	)
 	return
 }

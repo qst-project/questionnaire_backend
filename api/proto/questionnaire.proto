@@ -12,7 +12,7 @@ message CreateQuestionnaireRequest {
 }
 
 message Questionnaire {
-  string Id = 1;
+  uint32 Id = 1;
   string Title = 2;
   string Ref = 3;
   repeated Question Questions = 4;

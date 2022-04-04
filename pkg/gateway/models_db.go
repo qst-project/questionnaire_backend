@@ -4,12 +4,14 @@ import "gorm.io/gorm"
 
 type QuestionnaireDB struct {
 	gorm.Model
+
 	Title string `gorm:"not null;size:256"`
 	Ref   string `gorm:"not null;size:256"`
 }
 
 type QuestionDB struct {
 	gorm.Model
+
 	QuestionnaireId uint
 	Questionnaire   QuestionnaireDB `gorm:"foreignKey:QuestionnaireId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Order           string          `gorm:"not null;size:256"`
@@ -19,6 +21,7 @@ type QuestionDB struct {
 
 type RadioPossibleAnswerDB struct {
 	gorm.Model
+
 	QuestionId uint
 	Question   QuestionDB `gorm:"foreignKey:QuestionId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Text       string     `gorm:"size:256;not null"`
@@ -26,6 +29,7 @@ type RadioPossibleAnswerDB struct {
 
 type CheckboxPossibleAnswerDB struct {
 	gorm.Model
+
 	QuestionId uint
 	Question   QuestionDB `gorm:"foreignKey:QuestionId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Text       string     `gorm:"size:256;not null"`
@@ -33,6 +37,7 @@ type CheckboxPossibleAnswerDB struct {
 
 type TextPossibleAnswerDB struct {
 	gorm.Model
+
 	QuestionId  uint
 	Question    QuestionDB `gorm:"foreignKey:QuestionId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Text        string     `gorm:"size:256;not null"`
@@ -41,6 +46,7 @@ type TextPossibleAnswerDB struct {
 
 type RadioAnswerDB struct {
 	gorm.Model
+
 	QuestionnaireId       uint
 	Questionnaire         QuestionnaireDB `gorm:"foreignKey:QuestionnaireId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	QuestionId            uint
@@ -51,6 +57,7 @@ type RadioAnswerDB struct {
 
 type CheckboxAnswerDB struct {
 	gorm.Model
+
 	QuestionnaireId          uint
 	Questionnaire            QuestionnaireDB `gorm:"foreignKey:QuestionnaireId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	QuestionId               uint
@@ -61,6 +68,7 @@ type CheckboxAnswerDB struct {
 
 type TextAnswerDB struct {
 	gorm.Model
+
 	QuestionnaireId      uint
 	Questionnaire        QuestionnaireDB `gorm:"foreignKey:QuestionnaireId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	QuestionId           uint
