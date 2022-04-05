@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"github.com/qst-project/backend.git/pkg/core"
+	"go.uber.org/fx"
 )
 
 type QuestionnaireGateway interface {
@@ -12,11 +13,13 @@ type QuestionnaireGateway interface {
 }
 
 type Module struct {
+	fx.Out
+
 	QuestionnaireGateway
 }
 
-func Setup(postgresClient *PostgresClient) *Module {
-	return &Module{
-		QuestionnaireGateway: &QuestionnaireGatewayImpl{postgresClient: postgresClient},
+func Setup(postgresClient PostgresClient) Module {
+	return Module{
+		QuestionnaireGateway: &QuestionnaireGatewayImpl{postgresClient: &postgresClient},
 	}
 }

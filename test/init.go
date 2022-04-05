@@ -3,7 +3,6 @@ package test
 import (
 	"github.com/qst-project/backend.git/pkg"
 	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/delegate"
 	"github.com/qst-project/backend.git/pkg/gateway"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -27,7 +26,7 @@ func init() {
 		fx.Provide(NewTestConfig),
 		fx.Provide(gateway.NewPostgresClient),
 		fx.Provide(gateway.Setup),
-		fx.Provide(delegate.Setup),
+		fx.Provide(api.Setup),
 		fx.Provide(api.NewGrpcHandler),
 		fx.Invoke(api.RegisterGrpcServer),
 	)

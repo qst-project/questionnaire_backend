@@ -2,19 +2,24 @@ package api
 
 import (
 	"context"
-	"github.com/qst-project/backend.git/pkg/delegate"
+	"go.uber.org/fx"
 )
+
+type RequestHandlerArgs struct {
+	fx.In
+
+	QuestionnaireDelegate
+}
 
 type RequestHandler struct {
 	UnimplementedQuestionnaireServiceServer
-
-	delegateModule *delegate.Module
+	RequestHandlerArgs
 }
 
 type Handler = QuestionnaireServiceServer
 
 func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error) {
-	ref, err := h.delegateModule.CreateQuestionnaire(req.GetQuestionnaire())
+	ref, err := h.QuestionnaireDelegate.CreateQuestionnaire(req.GetQuestionnaire())
 	return &CreateQuestionnaireResponse{
 		Ref:     ref,
 		Err:     err.Error(),
@@ -22,6 +27,8 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 	}, nil
 }
 
-func NewGrpcHandler(service *delegate.Module) (Handler, error) {
-	return &RequestHandler{delegateModule: service}, nil
+func NewGrpcHandler(RequestHandlerArgs) (Handler, error) {
+	return &RequestHandler{
+		UnimplementedQuestionnaireServiceServer: UnimplementedQuestionnaireServiceServer{},
+	}, nil
 }
