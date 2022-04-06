@@ -8,16 +8,17 @@ import (
 	"go.uber.org/fx"
 )
 
+var AppDI = []fx.Option{
+	fx.Provide(pkg.NewLogger),
+	fx.Provide(pkg.NewConfig),
+	fx.Provide(api.Setup),
+	fx.Provide(usecase.Setup),
+	fx.Provide(gateway.Setup),
+	fx.Provide(gateway.NewPostgresClient),
+	fx.Provide(api.NewGrpcHandler),
+}
+
 func RunApp() {
-	app := fx.New(
-		fx.Provide(pkg.NewLogger),
-		fx.Provide(pkg.NewConfig),
-		fx.Provide(api.Setup),
-		fx.Provide(usecase.Setup),
-		fx.Provide(gateway.Setup),
-		fx.Provide(gateway.NewPostgresClient),
-		fx.Provide(api.NewGrpcHandler),
-		fx.Invoke(api.RegisterGrpcServer),
-	)
-	app.Run()
+	AppDI = append(AppDI, fx.Invoke(api.RegisterGrpcServer))
+	fx.New(AppDI...).Run()
 }
