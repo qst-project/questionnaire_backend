@@ -68,5 +68,4 @@ func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
 	assert.NoError(t, err)
 	assert.Equal(t, questionnaire.Ref, resp.Ref)
-	log.Printf("Response: %+v", resp.GetRef())
 }
