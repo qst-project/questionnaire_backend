@@ -45,16 +45,25 @@ func InvokeTestApp(t *testing.T, ctx context.Context) {
 	err := app.AppInvokeWith(fx.Invoke(RegisterTestGrpcServer)).Start(ctx)
 	assert.NoError(t, err)
 }
+func InvokeTestClient(t *testing.T, ctx context.Context) (conn *grpc.ClientConn) {
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
+	assert.NoError(t, err)
+	return
+}
+
+func CloseConnection(t *testing.T, c *grpc.ClientConn) {
+	err := c.Close()
+	assert.NoError(t, err)
+}
 
 func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	ctx := context.Background()
 	InvokeTestApp(t, ctx)
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	assert.NoError(t, err)
-	defer conn.Close()
-	client := api.NewQuestionnaireServiceClient(conn)
+	c := InvokeTestClient(t, ctx)
+	defer CloseConnection(t, c)
+	client := api.NewQuestionnaireServiceClient(c)
 	questionnaire := api.Questionnaire{
-		Ref: "test_ref",
+		Title: "test_title",
 	}
 	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
 	assert.NoError(t, err)
