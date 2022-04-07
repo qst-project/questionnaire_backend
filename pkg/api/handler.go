@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"go.uber.org/fx"
 )
 
@@ -22,13 +23,13 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 	ref, err := h.QuestionnaireDelegate.CreateQuestionnaire(req.GetQuestionnaire())
 	return &CreateQuestionnaireResponse{
 		Ref:     ref,
-		Err:     err.Error(),
+		Err:     fmt.Sprintf("%v", err),
 		ErrCode: 0,
 	}, nil
 }
 
-func NewGrpcHandler(RequestHandlerArgs) (Handler, error) {
+func NewGrpcHandler(handlerArgs RequestHandlerArgs) Handler {
 	return &RequestHandler{
-		UnimplementedQuestionnaireServiceServer: UnimplementedQuestionnaireServiceServer{},
-	}, nil
+		RequestHandlerArgs: handlerArgs,
+	}
 }

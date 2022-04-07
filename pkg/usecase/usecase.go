@@ -18,8 +18,6 @@ type Module struct {
 
 func Setup(questionnaireGateway gateway.QuestionnaireGateway) Module {
 	return Module{
-		fx.Out{},
-
-		&CreateQuestionnaireUseCaseImpl{questionnaireGateway},
+		CreateQuestionnaireUseCase: &CreateQuestionnaireUseCaseImpl{questionnaireGateway},
 	}
 }

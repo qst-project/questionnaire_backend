@@ -5,6 +5,7 @@ import (
 	"github.com/qst-project/backend.git/app"
 	"github.com/qst-project/backend.git/pkg"
 	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/stretchr/testify/assert"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"log"
@@ -17,7 +18,7 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 }
 
 func RegisterTestGrpcServer(
-	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger,
+	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate api.QuestionnaireDelegate,
 ) {
 	lifecycle.Append(
 		fx.Hook{
@@ -40,31 +41,23 @@ func RegisterTestGrpcServer(
 	)
 }
 
+func InvokeTestApp(t *testing.T, ctx context.Context) {
+	err := app.AppInvokeWith(fx.Invoke(RegisterTestGrpcServer)).Start(ctx)
+	assert.NoError(t, err)
+}
+
 func TestCreateQuestionnaireEndpoint(t *testing.T) {
-	app.AppDI = append(app.AppDI, fx.Invoke(RegisterTestGrpcServer))
-	tapp := fx.New(app.AppDI...)
 	ctx := context.Background()
-	err := tapp.Start(ctx)
-	if err != nil {
-		panic(err)
-	}
-	//err = tapp.Stop(ctx)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//ctx := context.Background()
+	InvokeTestApp(t, ctx)
 	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
-	}
+	assert.NoError(t, err)
 	defer conn.Close()
 	client := api.NewQuestionnaireServiceClient(conn)
 	questionnaire := api.Questionnaire{
 		Ref: "test_ref",
 	}
 	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
+	assert.NoError(t, err)
+	assert.Equal(t, questionnaire.Ref, resp.Ref)
 	log.Printf("Response: %+v", resp.GetRef())
 }

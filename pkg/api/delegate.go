@@ -13,8 +13,6 @@ type Module struct {
 
 func Setup(createQuestionnaireUseCase usecase.CreateQuestionnaireUseCase) Module {
 	return Module{
-		fx.Out{},
-
-		QuestionnaireDelegate{createQuestionnaireUseCase},
+		QuestionnaireDelegate: QuestionnaireDelegate{createQuestionnaireUseCase},
 	}
 }
