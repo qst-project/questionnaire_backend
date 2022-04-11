@@ -11,8 +11,8 @@ type Module struct {
 	QuestionnaireDelegate
 }
 
-func Setup(createQuestionnaireUseCase usecase.CreateQuestionnaireUseCase) Module {
+func Setup(QuestionnaireUseCase usecase.QuestionnaireUseCase) Module {
 	return Module{
-		QuestionnaireDelegate: QuestionnaireDelegate{createQuestionnaireUseCase},
+		QuestionnaireDelegate: QuestionnaireDelegate{QuestionnaireUseCase},
 	}
 }

@@ -10,14 +10,20 @@ type CreateQuestionnaireUseCase interface {
 	Invoke(Questionnaire core.Questionnaire) (string, error)
 }
 
+type GetQuestionnaireUseCase interface {
+	Invoke(ref string) (core.Questionnaire, error)
+}
+
 type Module struct {
 	fx.Out
 
 	CreateQuestionnaireUseCase
+	GetQuestionnaireUseCase
 }
 
 func Setup(questionnaireGateway gateway.QuestionnaireGateway) Module {
 	return Module{
 		CreateQuestionnaireUseCase: &CreateQuestionnaireUseCaseImpl{questionnaireGateway},
+		GetQuestionnaireUseCase:    &GetQuestionnaireUseCaseImpl{questionnaireGateway},
 	}
 }

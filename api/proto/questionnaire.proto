@@ -76,6 +76,6 @@ message TextPossibleAnswer {
 }
 
 message  Error {
-  string testError = 1;
+  string textError = 1;
   int32 code = 2;
 }

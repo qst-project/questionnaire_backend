@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"go.uber.org/fx"
 )
 
@@ -22,9 +21,23 @@ type Handler = QuestionnaireServiceServer
 func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error) {
 	ref, err := h.QuestionnaireDelegate.CreateQuestionnaire(req.GetQuestionnaire())
 	return &CreateQuestionnaireResponse{
-		Ref:     ref,
-		Err:     fmt.Sprintf("%v", err),
-		ErrCode: 0,
+		Ref: ref,
+		Error: &Error{
+			Code:      0,
+			TextError: err.Error(),
+		},
+	}, nil
+}
+
+func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error) {
+	ref := req.GetRef()
+	questionnaire, err := h.QuestionnaireDelegate.GetQuestionnaire(ref)
+	return &GetQuestionnaireResponse{
+		Questionnaire: questionnaire,
+		Error: &Error{
+			Code:      0,
+			TextError: err.Error(),
+		},
 	}, nil
 }
 
