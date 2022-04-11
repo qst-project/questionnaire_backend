@@ -2,7 +2,7 @@ package unit
 
 import (
 	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/models"
+	"github.com/qst-project/backend.git/pkg/core"
 	"testing"
 )
 
@@ -20,46 +20,46 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-type UtilitySurvey struct {
-	Questionnaire           *models.Questionnaire
-	Questions               []*models.Question
-	RadioPossibleAnswers    []*models.RadioPossibleAnswer
-	CheckboxPossibleAnswers []*models.CheckboxPossibleAnswer
-	TextPossibleAnswers     []*models.TextPossibleAnswer
-	RadioAnswers            []*models.RadioAnswer
-	CheckboxAnswers         []*models.CheckboxAnswer
-	TextAnswers             []*models.TextAnswer
+type UtilityQuestionnaire struct {
+	Questionnaire           *core.QuestionnaireDB
+	Questions               []*core.QuestionDB
+	RadioPossibleAnswers    []*core.RadioPossibleAnswerDB
+	CheckboxPossibleAnswers []*core.CheckboxPossibleAnswerDB
+	TextPossibleAnswers     []*core.TextPossibleAnswerDB
+	RadioAnswers            []*core.RadioAnswerDB
+	CheckboxAnswers         []*core.CheckboxAnswerDB
+	TextAnswers             []*core.TextAnswerDB
 }
 
-func (em *UtilitySurvey) From(gRRCModel *api.Survey) {
+func (em *UtilityQuestionnaire) From(gRRCModel *api.Questionnaire) {
 	em.Questionnaire.From(gRRCModel)
 
 	for _, question := range gRRCModel.GetQuestions() {
-		var modelsQuestion models.Question
+		var modelsQuestion core.QuestionDB
 		modelsQuestion.From(question)
 		em.Questions = append(em.Questions, &modelsQuestion)
 	}
 
 	for _, radioPossibleAnswer := range gRRCModel.GetRadioPossibleAnswers() {
-		var modelRadioPossibleAnswer models.RadioPossibleAnswer
+		var modelRadioPossibleAnswer core.RadioPossibleAnswerDB
 		modelRadioPossibleAnswer.From(radioPossibleAnswer)
 		em.RadioPossibleAnswers = append(em.RadioPossibleAnswers, &modelRadioPossibleAnswer)
 	}
 	for _, checkboxPossibleAnswer := range gRRCModel.GetCheckboxPossibleAnswers() {
-		var modelCheckboxPossibleAnswer models.CheckboxPossibleAnswer
+		var modelCheckboxPossibleAnswer core.CheckboxPossibleAnswerDB
 		modelCheckboxPossibleAnswer.From(checkboxPossibleAnswer)
 		em.CheckboxPossibleAnswers = append(em.CheckboxPossibleAnswers, &modelCheckboxPossibleAnswer)
 	}
 	for _, textPossibleAnswer := range gRRCModel.GetTextPossibleAnswers() {
-		var modelTextPossibleAnswer models.TextPossibleAnswer
+		var modelTextPossibleAnswer core.TextPossibleAnswerDB
 		modelTextPossibleAnswer.From(textPossibleAnswer)
 		em.TextPossibleAnswers = append(em.TextPossibleAnswers, &modelTextPossibleAnswer)
 	}
 }
 
-func TestTransformApiSurveyToUtility(t *testing.T) {
+func TestTransformApiQuestionnaireToUtility(t *testing.T) {
 
-	apiModels := &api.Survey{
+	apiModels := &api.Questionnaire{
 		Id:    "123",
 		Ref:   "/testRef",
 		Title: "Test Request",
@@ -77,8 +77,8 @@ func TestTransformApiSurveyToUtility(t *testing.T) {
 		},
 	}
 
-	var got UtilitySurvey
-	var want UtilitySurvey
+	var got UtilityQuestionnaire
+	var want UtilityQuestionnaire
 	got.From(apiModels)
 
 	if got.Questionnaire.Ref != want.Questionnaire.Ref {

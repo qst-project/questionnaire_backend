@@ -2,155 +2,70 @@ package test
 
 import (
 	"context"
+	"github.com/qst-project/backend.git/app"
 	"github.com/qst-project/backend.git/pkg"
 	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/configs"
-	. "github.com/qst-project/backend.git/pkg/grpc"
-	"github.com/qst-project/backend.git/pkg/repository"
-	"github.com/qst-project/backend.git/pkg/service"
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/fx"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/test/bufconn"
 	"log"
 	"net"
 	"testing"
 )
 
-const bufSize = 1024 * 1024
-
-var lis *bufconn.Listener
-
-func init() {
-	lis = bufconn.Listen(bufSize)
-	server := grpc.NewServer()
-	logger := pkg.NewLogger()
-	config, _ := configs.NewConfig()
-	postgresClient, _ := repository.NewPostgresClient(config, logger)
-	repos := repository.NewRepository(postgresClient)
-	serv := service.NewService(repos)
-	handler, _ := NewGrpcHandler(serv)
-	api.RegisterQuestionnaireServer(server, handler)
-	go func() {
-		if err := server.Serve(lis); err != nil {
-			log.Fatalf("Server exited with error: %v", err)
-		}
-	}()
-}
-
 func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }
 
-func TestFirstEndpoint(t *testing.T) {
-	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
-	}
-	defer conn.Close()
-	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.Test(ctx, &api.TestRequest{})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	log.Printf("Response: %+v", resp)
-	// Test for output here.
+func RegisterTestGrpcServer(
+	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate api.QuestionnaireDelegate,
+) {
+	lifecycle.Append(
+		fx.Hook{
+			OnStart: func(context.Context) (err error) {
+				//var listener = bufconn.Listen(bufSize)
+				server := grpc.NewServer()
+				api.RegisterQuestionnaireServiceServer(server, handler)
+				go func() {
+					err := server.Serve(lis)
+					if err != nil {
+						logger.Panic(err)
+					}
+				}()
+				return
+			},
+			OnStop: func(context.Context) error {
+				return nil
+			},
+		},
+	)
 }
 
-func TestGetSurveyEndpoint(t *testing.T) {
-	ctx := context.Background()
+func InvokeTestApp(t *testing.T, ctx context.Context) {
+	err := app.AppInvokeWith(fx.Invoke(RegisterTestGrpcServer)).Start(ctx)
+	assert.NoError(t, err)
+}
+func InvokeTestClient(t *testing.T, ctx context.Context) (conn *grpc.ClientConn) {
 	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
-	}
-	defer conn.Close()
-	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.GetSurvey(ctx, &api.GetSurveyRequest{Ref: "TestRef"})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	log.Printf("Response: %+v", resp.GetSurvey())
+	assert.NoError(t, err)
+	return
 }
 
-func TestCreateSurveyEndpoint(t *testing.T) {
-	survey := &api.Survey{
-		Id:    "22",
-		Ref:   "/testQuestionnaire",
-		Title: "Test Title",
-		Questions: []*api.Question{
-			{Id: "221", QuestionnaireId: "22", Text: "Сколько ты зарабатываешь?", Order: "1", Kind: "1"},
-			{Id: "222", QuestionnaireId: "22", Text: "Кто был президентом России?", Order: "2", Kind: "2"},
-		},
-		RadioPossibleAnswers: []*api.RadioPossibleAnswer{
-			{Id: "221", Text: ">100.000", QuestionId: "221"},
-			{Id: "222", Text: "<100.000", QuestionId: "221"},
-		},
-		CheckboxPossibleAnswers: []*api.CheckboxPossibleAnswer{
-			{Id: "221", Text: "Путин", QuestionId: "222"},
-			{Id: "222", Text: "Лукашенко", QuestionId: "222"},
-			{Id: "223", Text: "Ельцин", QuestionId: "222"},
-		},
-	}
-
-	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
-	}
-	defer conn.Close()
-	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.CreateSurvey(ctx, &api.CreateSurveyRequest{Survey: survey})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	log.Printf("Response: %+v", resp.GetResult())
+func CloseConnection(t *testing.T, c *grpc.ClientConn) {
+	err := c.Close()
+	assert.NoError(t, err)
 }
 
-func TestUpdateSurveyEndpoint(t *testing.T) {
-	updateSurvey := &api.Survey{
-		Id:    "22",
-		Ref:   "/testQuestionnaire",
-		Title: "Update Test Title",
-		Questions: []*api.Question{
-			{Id: "221", QuestionnaireId: "22", Text: "А Сколько ты зарабатываешь?", Order: "1", Kind: "1"},
-			{Id: "222", QuestionnaireId: "22", Text: "Кто был президентом Беларуси?", Order: "2", Kind: "2"},
-		},
-		RadioPossibleAnswers: []*api.RadioPossibleAnswer{
-			{Id: "221", Text: ">100.000", QuestionId: "221"},
-			{Id: "222", Text: "<100.000", QuestionId: "221"},
-		},
-		CheckboxPossibleAnswers: []*api.CheckboxPossibleAnswer{
-			{Id: "221", Text: "Путин", QuestionId: "222"},
-			{Id: "222", Text: "Лукашенко", QuestionId: "222"},
-			{Id: "223", Text: "Ельцин", QuestionId: "222"},
-		},
-	}
-
+func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
+	InvokeTestApp(t, ctx)
+	c := InvokeTestClient(t, ctx)
+	defer CloseConnection(t, c)
+	client := api.NewQuestionnaireServiceClient(c)
+	questionnaire := api.Questionnaire{
+		Title: "test_title",
 	}
-	defer conn.Close()
-	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.UpdateSurvey(ctx, &api.UpdateSurveyRequest{Survey: updateSurvey})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	log.Printf("Response: %+v", resp.GetResult())
-}
-
-func TestDeleteSurveyEndpoint(t *testing.T) {
-
-	ctx := context.Background()
-	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil {
-		t.Fatalf("Failed to dial bufnet: %v", err)
-	}
-	defer conn.Close()
-	client := api.NewQuestionnaireClient(conn)
-	resp, err := client.DeleteSurvey(ctx, &api.DeleteSurveyRequest{Ref: "/testQuestionnaire"})
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	log.Printf("Response: %+v", resp.GetResult())
+	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
+	assert.NoError(t, err)
+	assert.Equal(t, questionnaire.Ref, resp.Ref)
 }

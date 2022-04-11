@@ -1,7 +1,9 @@
 package main
 
-import "github.com/qst-project/backend.git/pkg"
+import (
+	"github.com/qst-project/backend.git/app"
+)
 
 func main() {
-	pkg.RunApp()
+	app.RunApp()
 }

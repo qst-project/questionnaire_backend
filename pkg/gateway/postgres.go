@@ -1,8 +1,7 @@
-package repository
+package gateway
 
 import (
-	"github.com/qst-project/backend.git/pkg/configs"
-	"github.com/qst-project/backend.git/pkg/models"
+	"github.com/qst-project/backend.git/pkg"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,7 +15,7 @@ type PostgresClient struct {
 	logger *log.Logger
 }
 
-func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClient PostgresClient, err error) {
+func NewPostgresClient(config pkg.Config, _logger *log.Logger) (postgresClient PostgresClient, err error) {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
@@ -42,15 +41,15 @@ func NewPostgresClient(config configs.Config, _logger *log.Logger) (postgresClie
 
 func (c *PostgresClient) Migrate() (err error) {
 	err = c.db.AutoMigrate(
-		// &models.User{},
-		&models.Question{},
-		&models.Questionnaire{},
-		&models.RadioPossibleAnswer{},
-		&models.TextPossibleAnswer{},
-		&models.CheckboxPossibleAnswer{},
-		&models.CheckboxAnswer{},
-		&models.RadioAnswer{},
-		&models.TextAnswer{},
+		//&User{},
+		&QuestionDB{},
+		&QuestionnaireDB{},
+		&RadioPossibleAnswerDB{},
+		&TextPossibleAnswerDB{},
+		&CheckboxPossibleAnswerDB{},
+		&CheckboxAnswerDB{},
+		&RadioAnswerDB{},
+		&TextAnswerDB{},
 	)
 	return
 }
