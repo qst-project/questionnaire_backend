@@ -2,14 +2,37 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"github.com/qst-project/backend.git/pkg/api"
 	"google.golang.org/grpc"
+	"io/ioutil"
 	"log"
 )
 
 // simple grpc client simple to test server
 
+// to do
+
+func loadTLSCfg() *tls.Config {
+	b, _ := ioutil.ReadFile("../cert/server.crt")
+	cp := x509.NewCertPool()
+	if !cp.AppendCertsFromPEM(b) {
+		log.Fatal("credentials: failed to append certificates")
+	}
+	config := &tls.Config{
+		InsecureSkipVerify: false,
+		RootCAs:            cp,
+	}
+	return config
+}
+
 func main() {
+
+	// Load our TLS certificate and use grpc/credentials to create new transport credentials
+	//creds := credentials.NewTLS(loadTLSCfg())
+	// Create a new connection using the transport credentials
+	//conn, err := grpc.DialContext(ctx, "localhost:9990", grpc.WithTransportCredentials(creds))
 	conn, err := grpc.Dial("localhost:9091", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
