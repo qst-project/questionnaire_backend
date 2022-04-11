@@ -5,12 +5,13 @@ import (
 )
 
 type QuestionnaireDelegate struct {
-	usecase.QuestionnaireUseCase
+	usecase.CreateQuestionnaireUseCase
+	usecase.GetQuestionnaireUseCase
 }
 
 func (s *QuestionnaireDelegate) CreateQuestionnaire(Questionnaire *Questionnaire) (ref string, err error) {
 	if qst, err := Questionnaire.ToCore(); err == nil {
-		ref, err = s.QuestionnaireUseCase.Invoke(qst)
+		ref, err = s.CreateQuestionnaireUseCase.Invoke(qst)
 	}
 	return
 }
