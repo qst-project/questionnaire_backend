@@ -5,43 +5,77 @@ package api;
 
 service QuestionnaireService {
   rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {};
+  rpc GetQuestionnaire(GetQuestionnaireRequest) returns (GetQuestionnaireResponse) {};
+  rpc UpdateQuestionnaire(UpdateQuestionnaireRequest) returns (UpdateQuestionnaireResponse) {};
+  rpc DeleteQuestionnaire(DeleteQuestionnaireRequest) returns (DeleteQuestionnaireResponse) {};
 }
 
 message CreateQuestionnaireRequest {
-  Questionnaire Questionnaire = 1;
-}
-
-message Questionnaire {
-  uint32 Id = 1;
-  string Title = 2;
-  string Ref = 3;
-  repeated Question Questions = 4;
-}
-
-message Question {
-  string Id = 1;
-  string QuestionnaireId = 2;
-  string Statement = 3;
-  string Type = 5;
-  repeated  RadioPossibleAnswer RadioPossibleAnswers = 6;
-  repeated  CheckboxPossibleAnswer CheckboxPossibleAnswers = 7;
-  repeated  TextPossibleAnswer TextPossibleAnswers = 8;
-}
-
-message RadioPossibleAnswer {
-  string Text = 1;
-}
-
-message CheckboxPossibleAnswer {
-  string Text = 1;
-}
-
-message TextPossibleAnswer {
-  string Text = 1;
+  Questionnaire questionnaire = 1;
 }
 
 message CreateQuestionnaireResponse {
   string ref = 1;
-  string err = 2;
-  int32 err_code = 3;
+  Error error = 2;
+}
+
+message GetQuestionnaireRequest {
+  string ref = 1;
+}
+
+message GetQuestionnaireResponse {
+  Questionnaire questionnaire = 1;
+  Error error = 2;
+}
+
+message UpdateQuestionnaireRequest {
+  Questionnaire questionnaire = 1;
+}
+
+message UpdateQuestionnaireResponse {
+  bool result = 1;
+  Error error = 2;
+}
+
+message DeleteQuestionnaireRequest {
+  string ref = 1;
+}
+
+message DeleteQuestionnaireResponse {
+  bool result = 1;
+  Error error = 2;
+}
+
+message Questionnaire {
+  uint32 id = 1;
+  string title = 2;
+  string ref = 3;
+  repeated Question questions = 4;
+}
+
+message Question {
+  string id = 1;
+  string questionnaireId = 2;
+  string statement = 3;
+  string type = 5;
+  repeated  RadioPossibleAnswer radioPossibleAnswers = 6;
+  repeated  CheckboxPossibleAnswer checkboxPossibleAnswers = 7;
+  repeated  TextPossibleAnswer textPossibleAnswers = 8;
+}
+
+message RadioPossibleAnswer {
+  string text = 1;
+}
+
+message CheckboxPossibleAnswer {
+  string text = 1;
+}
+
+message TextPossibleAnswer {
+  string text = 1;
+}
+
+message  Error {
+  string testError = 1;
+  int32 code = 2;
 }

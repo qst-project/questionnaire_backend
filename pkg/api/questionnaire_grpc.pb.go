@@ -19,6 +19,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QuestionnaireServiceClient interface {
 	CreateQuestionnaire(ctx context.Context, in *CreateQuestionnaireRequest, opts ...grpc.CallOption) (*CreateQuestionnaireResponse, error)
+	GetQuestionnaire(ctx context.Context, in *GetQuestionnaireRequest, opts ...grpc.CallOption) (*GetQuestionnaireResponse, error)
+	UpdateQuestionnaire(ctx context.Context, in *UpdateQuestionnaireRequest, opts ...grpc.CallOption) (*UpdateQuestionnaireResponse, error)
+	DeleteQuestionnaire(ctx context.Context, in *DeleteQuestionnaireRequest, opts ...grpc.CallOption) (*DeleteQuestionnaireResponse, error)
 }
 
 type questionnaireServiceClient struct {
@@ -38,11 +41,41 @@ func (c *questionnaireServiceClient) CreateQuestionnaire(ctx context.Context, in
 	return out, nil
 }
 
+func (c *questionnaireServiceClient) GetQuestionnaire(ctx context.Context, in *GetQuestionnaireRequest, opts ...grpc.CallOption) (*GetQuestionnaireResponse, error) {
+	out := new(GetQuestionnaireResponse)
+	err := c.cc.Invoke(ctx, "/api.QuestionnaireService/GetQuestionnaire", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *questionnaireServiceClient) UpdateQuestionnaire(ctx context.Context, in *UpdateQuestionnaireRequest, opts ...grpc.CallOption) (*UpdateQuestionnaireResponse, error) {
+	out := new(UpdateQuestionnaireResponse)
+	err := c.cc.Invoke(ctx, "/api.QuestionnaireService/UpdateQuestionnaire", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *questionnaireServiceClient) DeleteQuestionnaire(ctx context.Context, in *DeleteQuestionnaireRequest, opts ...grpc.CallOption) (*DeleteQuestionnaireResponse, error) {
+	out := new(DeleteQuestionnaireResponse)
+	err := c.cc.Invoke(ctx, "/api.QuestionnaireService/DeleteQuestionnaire", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionnaireServiceServer is the server API for QuestionnaireService service.
 // All implementations must embed UnimplementedQuestionnaireServiceServer
 // for forward compatibility
 type QuestionnaireServiceServer interface {
 	CreateQuestionnaire(context.Context, *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error)
+	GetQuestionnaire(context.Context, *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error)
+	UpdateQuestionnaire(context.Context, *UpdateQuestionnaireRequest) (*UpdateQuestionnaireResponse, error)
+	DeleteQuestionnaire(context.Context, *DeleteQuestionnaireRequest) (*DeleteQuestionnaireResponse, error)
 	mustEmbedUnimplementedQuestionnaireServiceServer()
 }
 
@@ -52,6 +85,15 @@ type UnimplementedQuestionnaireServiceServer struct {
 
 func (UnimplementedQuestionnaireServiceServer) CreateQuestionnaire(context.Context, *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateQuestionnaire not implemented")
+}
+func (UnimplementedQuestionnaireServiceServer) GetQuestionnaire(context.Context, *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQuestionnaire not implemented")
+}
+func (UnimplementedQuestionnaireServiceServer) UpdateQuestionnaire(context.Context, *UpdateQuestionnaireRequest) (*UpdateQuestionnaireResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateQuestionnaire not implemented")
+}
+func (UnimplementedQuestionnaireServiceServer) DeleteQuestionnaire(context.Context, *DeleteQuestionnaireRequest) (*DeleteQuestionnaireResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteQuestionnaire not implemented")
 }
 func (UnimplementedQuestionnaireServiceServer) mustEmbedUnimplementedQuestionnaireServiceServer() {}
 
@@ -84,6 +126,60 @@ func _QuestionnaireService_CreateQuestionnaire_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionnaireService_GetQuestionnaire_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetQuestionnaireRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionnaireServiceServer).GetQuestionnaire(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.QuestionnaireService/GetQuestionnaire",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionnaireServiceServer).GetQuestionnaire(ctx, req.(*GetQuestionnaireRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QuestionnaireService_UpdateQuestionnaire_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateQuestionnaireRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionnaireServiceServer).UpdateQuestionnaire(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.QuestionnaireService/UpdateQuestionnaire",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionnaireServiceServer).UpdateQuestionnaire(ctx, req.(*UpdateQuestionnaireRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QuestionnaireService_DeleteQuestionnaire_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteQuestionnaireRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionnaireServiceServer).DeleteQuestionnaire(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.QuestionnaireService/DeleteQuestionnaire",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionnaireServiceServer).DeleteQuestionnaire(ctx, req.(*DeleteQuestionnaireRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionnaireService_ServiceDesc is the grpc.ServiceDesc for QuestionnaireService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +190,18 @@ var QuestionnaireService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateQuestionnaire",
 			Handler:    _QuestionnaireService_CreateQuestionnaire_Handler,
+		},
+		{
+			MethodName: "GetQuestionnaire",
+			Handler:    _QuestionnaireService_GetQuestionnaire_Handler,
+		},
+		{
+			MethodName: "UpdateQuestionnaire",
+			Handler:    _QuestionnaireService_UpdateQuestionnaire_Handler,
+		},
+		{
+			MethodName: "DeleteQuestionnaire",
+			Handler:    _QuestionnaireService_DeleteQuestionnaire_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

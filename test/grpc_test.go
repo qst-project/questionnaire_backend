@@ -69,3 +69,13 @@ func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, questionnaire.Ref, resp.Ref)
 }
+
+func TestGetQuestionnaireEndpoint(t *testing.T) {
+	ctx := context.Background()
+	InvokeTestApp(t, ctx)
+	c := InvokeTestClient(t, ctx)
+	defer CloseConnection(t, c)
+	//client := api.NewQuestionnaireServiceClient(c)
+
+	//resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
+}
