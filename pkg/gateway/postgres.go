@@ -44,12 +44,7 @@ func (c *PostgresClient) Migrate() (err error) {
 		//&User{},
 		&QuestionDB{},
 		&QuestionnaireDB{},
-		&RadioPossibleAnswerDB{},
-		&TextPossibleAnswerDB{},
-		&CheckboxPossibleAnswerDB{},
-		&CheckboxAnswerDB{},
-		&RadioAnswerDB{},
-		&TextAnswerDB{},
+		&OptionsDB{},
 	)
 	return
 }

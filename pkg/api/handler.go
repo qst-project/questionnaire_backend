@@ -23,8 +23,8 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 	return &CreateQuestionnaireResponse{
 		Ref: ref,
 		Error: &Error{
-			Code:      0,
-			TextError: err.Error(),
+			Code: 0,
+			Text: err.Error(),
 		},
 	}, nil
 }
@@ -34,8 +34,8 @@ func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionn
 	return &GetQuestionnaireResponse{
 		Questionnaire: questionnaire,
 		Error: &Error{
-			Code:      0,
-			TextError: err.Error(),
+			Code: 0,
+			Text: err.Error(),
 		},
 	}, nil
 }

@@ -10,9 +10,8 @@ type QuestionnaireDelegate struct {
 }
 
 func (s *QuestionnaireDelegate) CreateQuestionnaire(Questionnaire *Questionnaire) (ref string, err error) {
-	if qst, err := Questionnaire.ToCore(); err == nil {
-		ref, err = s.CreateQuestionnaireUseCase.Invoke(qst)
-	}
+	qst := Questionnaire.ToCore()
+	ref, err = s.CreateQuestionnaireUseCase.Invoke(qst)
 	return
 }
 
