@@ -7,7 +7,6 @@ service QuestionnaireService {
   rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {};
   rpc GetQuestionnaire(GetQuestionnaireRequest) returns (GetQuestionnaireResponse) {};
   rpc UpdateQuestionnaire(UpdateQuestionnaireRequest) returns (UpdateQuestionnaireResponse) {};
-  rpc DeleteQuestionnaire(DeleteQuestionnaireRequest) returns (DeleteQuestionnaireResponse) {};
 }
 
 message CreateQuestionnaireRequest {
@@ -33,17 +32,11 @@ message UpdateQuestionnaireRequest {
 }
 
 message UpdateQuestionnaireResponse {
-  bool result = 1;
-  Error error = 2;
+  Error error = 1;
 }
 
 message DeleteQuestionnaireRequest {
   string ref = 1;
-}
-
-message DeleteQuestionnaireResponse {
-  bool result = 1;
-  Error error = 2;
 }
 
 message Questionnaire {
@@ -55,27 +48,12 @@ message Questionnaire {
 
 message Question {
   string id = 1;
-  string questionnaireId = 2;
-  string statement = 3;
-  string type = 5;
-  repeated  RadioPossibleAnswer radioPossibleAnswers = 6;
-  repeated  CheckboxPossibleAnswer checkboxPossibleAnswers = 7;
-  repeated  TextPossibleAnswer textPossibleAnswers = 8;
-}
-
-message RadioPossibleAnswer {
-  string text = 1;
-}
-
-message CheckboxPossibleAnswer {
-  string text = 1;
-}
-
-message TextPossibleAnswer {
-  string text = 1;
+  string statement = 2;
+  string type = 3;
+  repeated string options = 4;
 }
 
 message  Error {
-  string textError = 1;
+  string text = 1;
   int32 code = 2;
 }
