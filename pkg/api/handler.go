@@ -30,8 +30,7 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 }
 
 func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error) {
-	ref := req.GetRef()
-	questionnaire, err := h.QuestionnaireDelegate.GetQuestionnaire(ref)
+	questionnaire, err := h.QuestionnaireDelegate.GetQuestionnaire(req.GetRef())
 	return &GetQuestionnaireResponse{
 		Questionnaire: questionnaire,
 		Error: &Error{

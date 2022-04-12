@@ -17,44 +17,49 @@ type Questionnaire struct {
 }
 
 type Question struct {
-	Id            int
-	Questionnaire Questionnaire
-	Order         string
-	Kind          string
-	Text          string
+	Id
+	Order string
+	Kind  string
+	Text  string
 }
 
 type RadioPossibleAnswer struct {
-	Question Question
-	Text     string
+	Id
+	QuestionId uint
+	Text       string
 }
 
 type CheckboxPossibleAnswer struct {
-	Question Question
-	Text     string
+	Id
+	QuestionId uint
+	Text       string
 }
 
 type TextPossibleAnswer struct {
-	Question    Question
+	Id
+	QuestionId  uint
 	Text        string
 	Placeholder string
 }
 
 type RadioAnswer struct {
-	Questionnaire       Questionnaire
-	Question            Question
-	RadioPossibleAnswer RadioPossibleAnswer
+	Id
+	QuestionnaireId       uint
+	QuestionId            uint
+	RadioPossibleAnswerId uint
 }
 
 type CheckboxAnswer struct {
-	Questionnaire          Questionnaire
-	Question               Question
-	CheckboxPossibleAnswer CheckboxPossibleAnswer
+	Id
+	QuestionnaireId          uint
+	QuestionId               uint
+	CheckboxPossibleAnswerId uint
 }
 
 type TextAnswer struct {
-	Questionnaire      Questionnaire
-	Question           Question
-	TextPossibleAnswer TextPossibleAnswer
-	Answer             string
+	Id
+	QuestionnaireId      uint
+	QuestionId           uint
+	TextPossibleAnswerId uint
+	Answer               string
 }

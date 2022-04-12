@@ -18,167 +18,116 @@ func (em QuestionnaireDB) FromCore(questionnaire *core.Questionnaire) {
 	em.Ref = questionnaire.Ref
 }
 
-//func (em *QuestionDB) GetgRPCModel() api.Question {
-//	return api.Question{
-//		Id:              strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionnaireId: strconv.FormatUint(uint64(em.QuestionnaireId), 10),
-//		Text:            em.Text,
-//		Order:           em.Order,
-//		Kind:            em.Kind,
-//	}
-//}
-//
-//func (em *QuestionDB) From(gRRCModel *api.Question) {
-//	id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	QuestionnaireId, err2 := strconv.ParseUint(gRRCModel.QuestionnaireId, 10, 64)
-//	if err2 != nil {
-//		log.Fatal(err2)
-//	}
-//	em.ID = uint(id)
-//	em.QuestionnaireId = uint(QuestionnaireId)
-//	em.Text = gRRCModel.Text
-//	em.Order = gRRCModel.Order
-//	em.Kind = gRRCModel.Kind
-//}
+func (em *QuestionDB) ToCore() core.Question {
+	return core.Question{
+		Id:    core.Id(em.ID),
+		Text:  em.Text,
+		Order: em.Order,
+		Kind:  em.Kind,
+	}
+}
+
+func (em *QuestionDB) FromCore(question *core.Question) {
+	em.ID = uint(question.Id)
+	em.Text = question.Text
+	em.Order = question.Order
+	em.Kind = question.Kind
+}
 
 // ------------------------------------------------------------------------
 
-//func (em *RadioPossibleAnswerDB) GetgRPCModel() api.RadioPossibleAnswer {
-//	return api.RadioPossibleAnswer{
-//		Id:         strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId: strconv.FormatUint(uint64(em.QuestionId), 10),
-//		Text:       em.Text,
-//	}
-//}
-//
-//func (em *RadioPossibleAnswerDB) From(gRRCModel *api.RadioPossibleAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	QuestionId, err := strconv.ParseUint(gRRCModel.QuestionId, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	em.ID = uint(Id)
-//	em.QuestionId = uint(QuestionId)
-//	em.Text = gRRCModel.Text
-//}
-//
-//func (em *CheckboxPossibleAnswerDB) GetgRPCModel() api.CheckboxPossibleAnswer {
-//	return api.CheckboxPossibleAnswer{
-//		Id:         strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId: strconv.FormatUint(uint64(em.QuestionId), 10),
-//		Text:       em.Text,
-//	}
-//}
-//
-//func (em *CheckboxPossibleAnswerDB) From(gRRCModel *api.CheckboxPossibleAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	QuestionId, err := strconv.ParseUint(gRRCModel.QuestionId, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	em.ID = uint(Id)
-//	em.QuestionId = uint(QuestionId)
-//	em.Text = gRRCModel.Text
-//}
-//
-//func (em *TextPossibleAnswerDB) GetgRPCModel() api.TextPossibleAnswer {
-//	return api.TextPossibleAnswer{
-//		Id:          strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId:  strconv.FormatUint(uint64(em.QuestionId), 10),
-//		Text:        em.Text,
-//		Placeholder: em.Placeholder,
-//	}
-//}
-//
-//func (em *TextPossibleAnswerDB) From(gRRCModel *api.TextPossibleAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	QuestionId, err := strconv.ParseUint(gRRCModel.QuestionId, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	em.ID = uint(Id)
-//	em.QuestionId = uint(QuestionId)
-//	em.Text = gRRCModel.Text
-//	em.Placeholder = gRRCModel.Placeholder
-//}
+func (em *RadioPossibleAnswerDB) ToCore() core.RadioPossibleAnswer {
+	return core.RadioPossibleAnswer{
+		Id:         core.Id(em.ID),
+		QuestionId: em.QuestionId,
+		Text:       em.Text,
+	}
+}
+
+func (em *RadioPossibleAnswerDB) FromCore(radioPossibleAnswer *core.RadioPossibleAnswer) {
+	em.ID = uint(radioPossibleAnswer.Id)
+	em.QuestionId = radioPossibleAnswer.QuestionId
+	em.Text = radioPossibleAnswer.Text
+}
+
+func (em *CheckboxPossibleAnswerDB) ToCore() core.CheckboxPossibleAnswer {
+	return core.CheckboxPossibleAnswer{
+		Id:         core.Id(em.ID),
+		QuestionId: em.QuestionId,
+		Text:       em.Text,
+	}
+}
+
+func (em *CheckboxPossibleAnswerDB) FromCore(checkboxPossibleAnswer *core.CheckboxPossibleAnswer) {
+	em.ID = uint(checkboxPossibleAnswer.Id)
+	em.QuestionId = checkboxPossibleAnswer.QuestionId
+	em.Text = checkboxPossibleAnswer.Text
+}
+
+func (em *TextPossibleAnswerDB) ToCore() core.TextPossibleAnswer {
+	return core.TextPossibleAnswer{
+		Id:          core.Id(em.ID),
+		QuestionId:  em.QuestionId,
+		Text:        em.Text,
+		Placeholder: em.Placeholder,
+	}
+}
+
+func (em *TextPossibleAnswerDB) FromCore(textPossibleAnswer *core.TextPossibleAnswer) {
+	em.ID = uint(textPossibleAnswer.Id)
+	em.QuestionId = textPossibleAnswer.QuestionId
+	em.Text = textPossibleAnswer.Text
+	em.Placeholder = textPossibleAnswer.Placeholder
+}
 
 // --------------------------------------------------------------------------
 
-//func (em *RadioAnswerDB) GetgRPCModel() api.RadioAnswer {
-//	return api.RadioAnswer{
-//		Id:                  strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId:          strconv.FormatUint(uint64(em.QuestionId), 10),
-//		QuestionnaireId:     strconv.FormatUint(uint64(em.QuestionnaireId), 10),
-//		RadioPossibleAnswer: strconv.FormatUint(uint64(em.RadioPossibleAnswerId), 10),
+//func (em *RadioAnswerDB) ToCore() core.RadioAnswer {
+//	return core.RadioAnswer{
+//		Id:                    core.Id(em.ID),
+//		QuestionId:            em.QuestionId,
+//		QuestionnaireId:       em.QuestionnaireId,
+//		RadioPossibleAnswerId: em.RadioPossibleAnswerId,
 //	}
 //}
 //
-//func (em *RadioAnswerDB) From(gRRCModel *api.RadioAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	RadioPossibleAnswerId, err := strconv.ParseUint(gRRCModel.RadioPossibleAnswer, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	em.ID = uint(Id)
-//	em.RadioPossibleAnswerId = uint(RadioPossibleAnswerId)
+//func (em *RadioAnswerDB) FromCore(radioAnswer *core.RadioAnswer) {
+//	em.ID = uint(radioAnswer.Id)
+//	em.QuestionId = radioAnswer.QuestionId
+//	em.QuestionnaireId = radioAnswer.QuestionnaireId
+//	em.RadioPossibleAnswerId = radioAnswer.RadioPossibleAnswerId
 //}
 //
-//func (em *CheckboxAnswerDB) GetgRPCModel() api.CheckboxAnswer {
-//	return api.CheckboxAnswer{
-//		Id:                     strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId:             strconv.FormatUint(uint64(em.QuestionId), 10),
-//		QuestionnaireId:        strconv.FormatUint(uint64(em.QuestionnaireId), 10),
-//		CheckboxPossibleAnswer: strconv.FormatUint(uint64(em.CheckboxPossibleAnswerId), 10),
+//func (em *CheckboxAnswerDB) ToCore() core.CheckboxAnswer {
+//	return core.CheckboxAnswer{
+//		Id:                       core.Id(em.ID),
+//		QuestionId:               em.QuestionId,
+//		QuestionnaireId:          em.QuestionnaireId,
+//		CheckboxPossibleAnswerId: em.CheckboxPossibleAnswerId,
 //	}
 //}
 //
-//func (em *CheckboxAnswerDB) From(gRRCModel *api.CheckboxAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	CheckboxPossibleAnswerId, err := strconv.ParseUint(gRRCModel.CheckboxPossibleAnswer, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	em.ID = uint(Id)
-//	em.CheckboxPossibleAnswerId = uint(CheckboxPossibleAnswerId)
+//func (em *CheckboxAnswerDB) From(checkboxAnswer *core.CheckboxAnswer) {
+//	em.ID = uint(checkboxAnswer.Id)
+//	em.CheckboxPossibleAnswerId = checkboxAnswer.CheckboxPossibleAnswerId
+//	em.QuestionnaireId = checkboxAnswer.QuestionnaireId
+//	em.QuestionId = checkboxAnswer.QuestionId
 //}
 //
-//func (em *TextAnswerDB) GetGRPCModel() api.TextAnswer {
-//	return api.TextAnswer{
-//		Id:                 strconv.FormatUint(uint64(em.ID), 10),
-//		QuestionId:         strconv.FormatUint(uint64(em.QuestionId), 10),
-//		QuestionnaireId:    strconv.FormatUint(uint64(em.QuestionnaireId), 10),
-//		TextPossibleAnswer: strconv.FormatUint(uint64(em.TextPossibleAnswerId), 10),
+//func (em *TextAnswerDB) GetGRPCModel() core.TextAnswer {
+//	return core.TextAnswer{
+//		Id:                   core.Id(em.ID),
+//		QuestionId:           em.QuestionId,
+//		QuestionnaireId:      em.QuestionnaireId,
+//		TextPossibleAnswerId: em.TextPossibleAnswerId,
+//		Answer:               em.Answer,
 //	}
 //}
 //
-//func (em *TextAnswerDB) From(gRRCModel *api.TextAnswer) {
-//	Id, err := strconv.ParseUint(gRRCModel.Id, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	TextPossibleAnswerId, err := strconv.ParseUint(gRRCModel.TextPossibleAnswer, 10, 64)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	em.ID = uint(Id)
-//	em.TextPossibleAnswerId = uint(TextPossibleAnswerId)
+//func (em *TextAnswerDB) From(textAnswer *core.TextAnswer) {
+//	em.ID = uint(textAnswer.Id)
+//	em.TextPossibleAnswerId = textAnswer.TextPossibleAnswerId
+//	em.QuestionId = textAnswer.QuestionId
+//	em.QuestionnaireId = textAnswer.QuestionnaireId
+//	em.Answer = textAnswer.Answer
 //}
