@@ -48,7 +48,7 @@ func (em *OptionsDB) ToCore() string {
 	return em.Text
 }
 
-func (em *OptionsDB) FromCore(option string, questionnaireId uint) {
-	em.QuestionId = questionnaireId
+func (em *OptionsDB) FromCore(option string, questionId uint) {
+	em.QuestionId = questionId
 	em.Text = option
 }

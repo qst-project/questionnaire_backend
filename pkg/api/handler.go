@@ -20,11 +20,20 @@ type Handler = QuestionnaireServiceServer
 
 func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error) {
 	ref, err := h.QuestionnaireDelegate.CreateQuestionnaire(req.GetQuestionnaire())
+	if err != nil {
+		return &CreateQuestionnaireResponse{
+			Ref: ref,
+			Error: &Error{
+				Code: 0,
+				Text: err.Error(),
+			},
+		}, err
+	}
 	return &CreateQuestionnaireResponse{
 		Ref: ref,
 		Error: &Error{
 			Code: 0,
-			Text: err.Error(),
+			Text: "",
 		},
 	}, nil
 }
