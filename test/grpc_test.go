@@ -78,13 +78,13 @@ func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	assert.Equal(t, questionnaire.Ref, resp.Ref)
 }
 
-//func TestGetQuestionnaireEndpoint(t *testing.T) {
-//	ctx := context.Background()
-//	InvokeTestApp(t, ctx)
-//	c := InvokeTestClient(t, ctx)
-//	defer CloseConnection(t, c)
-//	client := api.NewQuestionnaireServiceClient(c)
-//	resp, err := client.GetQuestionnaire(ctx, &api.GetQuestionnaireRequest{Ref: "TestRef"})
-//	assert.NoError(t, err)
-//	assert.Equal(t, "TestTitle", resp.GetQuestionnaire().Title)
-//}
+func TestGetQuestionnaireEndpoint(t *testing.T) {
+	ctx := context.Background()
+	InvokeTestApp(t, ctx)
+	c := InvokeTestClient(t, ctx)
+	defer CloseConnection(t, c)
+	client := api.NewQuestionnaireServiceClient(c)
+	resp, err := client.GetQuestionnaire(ctx, &api.GetQuestionnaireRequest{Ref: "/testRef"})
+	assert.NoError(t, err)
+	assert.Equal(t, "Test Request", resp.GetQuestionnaire().Title)
+}

@@ -40,11 +40,20 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 
 func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error) {
 	questionnaire, err := h.QuestionnaireDelegate.GetQuestionnaire(req.GetRef())
+	if err != nil {
+		return &GetQuestionnaireResponse{
+			Questionnaire: &questionnaire,
+			Error: &Error{
+				Code: 1,
+				Text: err.Error(),
+			},
+		}, err
+	}
 	return &GetQuestionnaireResponse{
-		Questionnaire: questionnaire,
+		Questionnaire: &questionnaire,
 		Error: &Error{
 			Code: 0,
-			Text: err.Error(),
+			Text: "",
 		},
 	}, nil
 }

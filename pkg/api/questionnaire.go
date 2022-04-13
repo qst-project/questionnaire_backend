@@ -15,7 +15,12 @@ func (s *QuestionnaireDelegate) CreateQuestionnaire(Questionnaire *Questionnaire
 	return
 }
 
-func (s *QuestionnaireDelegate) GetQuestionnaire(ref string) (Questionnaire *Questionnaire, err error) {
-	//qst, err := s.QuestionnaireUseCase.GetQuestionnaire(ref)
-	return
+func (s *QuestionnaireDelegate) GetQuestionnaire(ref string) (Questionnaire, error) {
+	var protoQuestionnaire Questionnaire
+	qst, err := s.GetQuestionnaireUseCase.Invoke(ref)
+	if err != nil {
+		return protoQuestionnaire, err
+	}
+	protoQuestionnaire.FromCore(&qst)
+	return protoQuestionnaire, nil
 }
