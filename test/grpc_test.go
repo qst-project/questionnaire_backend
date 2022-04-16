@@ -13,6 +13,11 @@ import (
 	"testing"
 )
 
+func PanicOnError(t *testing.T, err error) {
+	if assert.Error(t, err) {
+		panic(err)
+	}
+}
 func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }
@@ -65,12 +70,10 @@ func TestCreateQuestionnaireEndpoint(t *testing.T) {
 	questionnaire := api.Questionnaire{
 		Ref:   "/testRef",
 		Title: "Test Request",
-		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: "radio", Options: []string{
-				"Хорошо",
-				"Нормально",
-				"Плохо",
-			}},
+		Questions: []*api.Question{{
+			Statement: "Как дела?",
+			Type:      "radio",
+			Options:   []string{"Хорошо", "Нормально", "Плохо"}},
 		},
 	}
 	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})

@@ -13,8 +13,8 @@
       </ENTRIES>
     </EXTENSION>
     <root_directory value="$PROJECT_DIR$" />
-    <kind value="DIRECTORY" />
-    <package value="github.com/qst-project/backend.git" />
+    <kind value="PACKAGE" />
+    <package value="github.com/qst-project/backend.git/test" />
     <directory value="$PROJECT_DIR$/test" />
     <filePath value="$PROJECT_DIR$" />
     <framework value="gotest" />

@@ -14,8 +14,8 @@ func main() {
 	}
 	c := api.NewQuestionnaireServiceClient(conn)
 	Questionnaire := &api.Questionnaire{
-		Title: "Update Test Title",
+		Title: "Test title",
 	}
-	createQuestionnaireRes, createQuestionnaireErr := c.CreateQuestionnaire(context.Background(), &api.CreateQuestionnaireRequest{Questionnaire: Questionnaire})
-	println("%v %v", createQuestionnaireRes, createQuestionnaireErr)
+	response, _ := c.CreateQuestionnaire(context.Background(), &api.CreateQuestionnaireRequest{Questionnaire: Questionnaire})
+	println("%v", response.String())
 }
