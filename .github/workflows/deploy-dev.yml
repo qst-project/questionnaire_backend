@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-      - dev*
+      - dev.*
     branches:
       - dev
 name: ssh
