@@ -19,5 +19,5 @@ jobs:
       - name: rsync over ssh
         run: rsync -ar --delete * ${{ secrets.DEV_USER }}@${{ secrets.DEV_HOST }}:~/backend_temp
       - name: docker-compose
-        run: ssh ${{ secrets.DEV_USER }}@${{ secrets.DEV_HOST }} "cd backend_temp/ && docker-compose -f docker-compose-dev.yml up -d"
+        run: ssh ${{ secrets.DEV_USER }}@${{ secrets.DEV_HOST }} "cd backend_temp/ && docker compose -f docker-compose-dev.yml up -d"
 
