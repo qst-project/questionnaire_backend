@@ -5,11 +5,11 @@ services:
       - "9091:9091"
     depends_on:
       - postgres
+    networks:
+      postgres:
   postgres:
     restart: always
     image: postgres:13
-    ports:
-      - 5432:5432
     environment:
       - DEBUG=false
       - POSTGRES_USER=qst
@@ -17,6 +17,11 @@ services:
       - POSTGRES_DB=qst_db
     volumes:
       - postgres_data:/usr/lib/postgresql
+    networks:
+      postgres:
 
 volumes:
   postgres_data: {}
+networks:
+  postgres:
+    driver: bridge
