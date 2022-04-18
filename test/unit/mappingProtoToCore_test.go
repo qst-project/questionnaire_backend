@@ -2,23 +2,13 @@ package unit
 
 import (
 	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/core"
+	"github.com/qst-project/backend.git/test/unit/templates"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestMappingProtoQuestionnaireToCore(t *testing.T) {
-	protoQuestionnaire := &api.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: 0, Options: []string{
-				"Хорошо",
-				"Нормально",
-				"Плохо",
-			}},
-		},
-	}
+	protoQuestionnaire := templates.GetProtoQuestionnaire()
 	coreQuestionnaire := protoQuestionnaire.ToCore()
 
 	assert.Equal(t, protoQuestionnaire.Ref, coreQuestionnaire.Ref)
@@ -27,21 +17,7 @@ func TestMappingProtoQuestionnaireToCore(t *testing.T) {
 }
 
 func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
-	coreQuestionnaire := &core.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*core.Question{
-			{
-				Id:        1,
-				Statement: "Как дела?",
-				Type:      0,
-				Options: []string{
-					"Хорошо",
-					"Нормально",
-					"Плохо",
-				}},
-		},
-	}
+	coreQuestionnaire := templates.GetCoreQuestionnaire()
 	var protoQuestionnaire api.Questionnaire
 	protoQuestionnaire.FromCore(coreQuestionnaire)
 
@@ -51,16 +27,7 @@ func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
 }
 
 func TestMappingProtoQuestionToCore(t *testing.T) {
-	protoQuestion := &api.Question{
-		Statement: "Как дела?",
-		Type:      0,
-		Options: []string{
-			"Хорошо",
-			"Нормально",
-			"Плохо",
-		},
-	}
-
+	protoQuestion := templates.GetProtoQuestion()
 	coreQuestion := protoQuestion.ToCore()
 
 	assert.Equal(t, protoQuestion.Statement, coreQuestion.Statement)
@@ -69,15 +36,7 @@ func TestMappingProtoQuestionToCore(t *testing.T) {
 }
 
 func TestMappingProtoQuestionFromCore(t *testing.T) {
-	coreQuestion := &core.Question{
-		Statement: "Как дела?",
-		Type:      1,
-		Options: []string{
-			"Хорошо",
-			"Нормально",
-			"Плохо",
-		},
-	}
+	coreQuestion := templates.GetCoreQuestion()
 	var protoQuestion api.Question
 	protoQuestion.FromCore(coreQuestion)
 

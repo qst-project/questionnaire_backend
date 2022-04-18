@@ -1,38 +1,16 @@
 package unit
 
 import (
-	"github.com/qst-project/backend.git/pkg/core"
 	"github.com/qst-project/backend.git/pkg/gateway"
+	"github.com/qst-project/backend.git/test/unit/templates"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestMappingDbQuestionnaireToCore(t *testing.T) {
-	dbQuestionnaire := &gateway.QuestionnaireDB{
-		Ref:   "/testRef",
-		Title: "Test Request",
-	}
-	dbQuestions := []*gateway.QuestionDB{
-		{
-			Type:      1,
-			Statement: "Как дела?",
-			Order:     1,
-		},
-	}
-	dbOptions := []*gateway.OptionsDB{
-		{
-			QuestionId: 1,
-			Text:       "Хорошо",
-		},
-		{
-			QuestionId: 1,
-			Text:       "Нормально",
-		},
-		{
-			QuestionId: 1,
-			Text:       "Плохо",
-		},
-	}
+	dbQuestionnaire := templates.GetDbQuestionnaire()
+	dbQuestions := templates.GetDbQuestions()
+	dbOptions := templates.GetDbOptions()
 
 	coreQuestionnaire := dbQuestionnaire.ToCore(dbQuestions, dbOptions)
 
@@ -43,21 +21,7 @@ func TestMappingDbQuestionnaireToCore(t *testing.T) {
 }
 
 func TestMappingDbQuestionnaireFromCore(t *testing.T) {
-	coreQuestionnaire := &core.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*core.Question{
-			{
-				Id:        1,
-				Statement: "Как дела?",
-				Type:      0,
-				Options: []string{
-					"Хорошо",
-					"Нормально",
-					"Плохо",
-				}},
-		},
-	}
+	coreQuestionnaire := templates.GetCoreQuestionnaire()
 	var dbQuestionnaire gateway.QuestionnaireDB
 	dbQuestionnaire.FromCore(coreQuestionnaire)
 
@@ -66,26 +30,8 @@ func TestMappingDbQuestionnaireFromCore(t *testing.T) {
 }
 
 func TestMappingDbQuestionToCore(t *testing.T) {
-	dbQuestion := &gateway.QuestionDB{
-		Statement: "Как дела?",
-		Type:      0,
-		Order:     1,
-	}
-
-	dbOptions := []*gateway.OptionsDB{
-		{
-			QuestionId: 1,
-			Text:       "Хорошо",
-		},
-		{
-			QuestionId: 1,
-			Text:       "Нормально",
-		},
-		{
-			QuestionId: 1,
-			Text:       "Плохо",
-		},
-	}
+	dbQuestion := templates.GetDbQuestion()
+	dbOptions := templates.GetDbOptions()
 
 	coreQuestion := dbQuestion.ToCore(dbOptions)
 	assert.Equal(t, dbQuestion.Statement, coreQuestion.Statement)
@@ -94,15 +40,7 @@ func TestMappingDbQuestionToCore(t *testing.T) {
 }
 
 func TestMappingDbQuestionFromCore(t *testing.T) {
-	coreQuestion := &core.Question{
-		Statement: "Как дела?",
-		Type:      0,
-		Options: []string{
-			"Хорошо",
-			"Нормально",
-			"Плохо",
-		},
-	}
+	coreQuestion := templates.GetCoreQuestion()
 	var dbQuestion gateway.QuestionDB
 	dbQuestion.FromCore(1, 1, coreQuestion)
 
