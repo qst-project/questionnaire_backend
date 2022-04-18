@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "9091:9091"
+    depends_on:
+      - postgres
+    networks:
+      postgres:
+  postgres:
+    restart: always
+    image: postgres:13
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=qst
+      - POSTGRES_PASSWORD=qst_pwd
+      - POSTGRES_DB=qst_db
+    volumes:
+      - postgres_data:/usr/lib/postgresql
+    networks:
+      postgres:
+
+volumes:
+  postgres_data: {}
+networks:
+  postgres:
+    driver: bridge

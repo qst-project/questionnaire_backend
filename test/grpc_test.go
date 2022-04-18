@@ -16,6 +16,11 @@ import (
 	"testing"
 )
 
+func PanicOnError(t *testing.T, err error) {
+	if assert.Error(t, err) {
+		panic(err)
+	}
+}
 func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }

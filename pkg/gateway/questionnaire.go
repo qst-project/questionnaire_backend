@@ -72,9 +72,6 @@ func (r *QuestionnaireGatewayImpl) CreateQuestionnaire(Questionnaire core.Questi
 		}
 		return nil
 	})
-	if err != nil {
-		return "", err
-	}
-	// TODO gen ref
-	return questionnaireDb.Ref, nil
+	ref = questionnaireDb.Ref
+	return
 }
