@@ -1,4 +1,4 @@
-package api
+package proto
 
 import (
 	"github.com/qst-project/backend.git/pkg/core"

@@ -16,7 +16,7 @@ func GetCoreQuestion() *core.Question {
 
 func GetCoreQuestionnaire() *core.Questionnaire {
 	return &core.Questionnaire{
-		Ref:   "/testRef",
+		Ref:   "testRef",
 		Title: "Test Request",
 		Questions: []*core.Question{
 			{

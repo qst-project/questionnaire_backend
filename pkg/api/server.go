@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/qst-project/backend.git/pkg"
+	"github.com/qst-project/backend.git/pkg/proto"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"log"
@@ -18,7 +19,7 @@ func RegisterGrpcServer(
 				var listener net.Listener
 				if listener, err = net.Listen("tcp", config.GrpcTcpPort); err == nil {
 					server := grpc.NewServer()
-					RegisterQuestionnaireServiceServer(server, handler)
+					proto.RegisterQuestionnaireServiceServer(server, handler)
 					go func() {
 						err := server.Serve(listener)
 						if err != nil {

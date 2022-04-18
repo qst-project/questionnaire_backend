@@ -46,7 +46,7 @@ func GetDbOptions() []*gateway.OptionsDB {
 
 func GetDbQuestionnaire() *gateway.QuestionnaireDB {
 	return &gateway.QuestionnaireDB{
-		Ref:   "/testRef",
+		Ref:   "testRef",
 		Title: "Test Request",
 	}
 }

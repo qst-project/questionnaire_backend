@@ -1,7 +1,7 @@
 package unit
 
 import (
-	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/proto"
 	"github.com/qst-project/backend.git/test/unit/templates"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -18,7 +18,7 @@ func TestMappingProtoQuestionnaireToCore(t *testing.T) {
 
 func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
 	coreQuestionnaire := templates.GetCoreQuestionnaire()
-	var protoQuestionnaire api.Questionnaire
+	var protoQuestionnaire proto.Questionnaire
 	protoQuestionnaire.FromCore(coreQuestionnaire)
 
 	assert.Equal(t, protoQuestionnaire.Ref, coreQuestionnaire.Ref)
@@ -37,7 +37,7 @@ func TestMappingProtoQuestionToCore(t *testing.T) {
 
 func TestMappingProtoQuestionFromCore(t *testing.T) {
 	coreQuestion := templates.GetCoreQuestion()
-	var protoQuestion api.Question
+	var protoQuestion proto.Question
 	protoQuestion.FromCore(coreQuestion)
 
 	assert.Equal(t, protoQuestion.Statement, coreQuestion.Statement)

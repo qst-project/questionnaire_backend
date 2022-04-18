@@ -5,6 +5,9 @@ import (
 	"github.com/qst-project/backend.git/app"
 	"github.com/qst-project/backend.git/pkg"
 	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/delegate"
+	"github.com/qst-project/backend.git/pkg/proto"
+	"github.com/qst-project/backend.git/test/unit/templates"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
@@ -18,14 +21,14 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 }
 
 func RegisterTestGrpcServer(
-	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate api.QuestionnaireDelegate,
+	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate delegate.QuestionnaireDelegate,
 ) {
 	lifecycle.Append(
 		fx.Hook{
 			OnStart: func(context.Context) (err error) {
 				//var listener = bufconn.Listen(bufSize)
 				server := grpc.NewServer()
-				api.RegisterQuestionnaireServiceServer(server, handler)
+				proto.RegisterQuestionnaireServiceServer(server, handler)
 				go func() {
 					err := server.Serve(lis)
 					if err != nil {
@@ -56,35 +59,25 @@ func CloseConnection(t *testing.T, c *grpc.ClientConn) {
 	assert.NoError(t, err)
 }
 
-func TestCreateQuestionnaireEndpoint(t *testing.T) {
+func TestCreateQuestionnaireUnary(t *testing.T) {
 	ctx := context.Background()
 	InvokeTestApp(t, ctx)
 	c := InvokeTestClient(t, ctx)
 	defer CloseConnection(t, c)
-	client := api.NewQuestionnaireServiceClient(c)
-	questionnaire := api.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: api.Types_RADIO, Options: []string{
-				"Хорошо",
-				"Нормально",
-				"Плохо",
-			}},
-		},
-	}
-	resp, err := client.CreateQuestionnaire(ctx, &api.CreateQuestionnaireRequest{Questionnaire: &questionnaire})
+	client := proto.NewQuestionnaireServiceClient(c)
+	questionnaire := templates.GetProtoQuestionnaire()
+	resp, err := client.CreateQuestionnaire(ctx, &proto.CreateQuestionnaireRequest{Questionnaire: questionnaire})
 	assert.NoError(t, err)
 	assert.Equal(t, questionnaire.Ref, resp.Ref)
 }
 
-func TestGetQuestionnaireEndpoint(t *testing.T) {
+func TestGetQuestionnaireUnary(t *testing.T) {
 	ctx := context.Background()
 	InvokeTestApp(t, ctx)
 	c := InvokeTestClient(t, ctx)
 	defer CloseConnection(t, c)
-	client := api.NewQuestionnaireServiceClient(c)
-	resp, err := client.GetQuestionnaire(ctx, &api.GetQuestionnaireRequest{Ref: "/testRef"})
+	client := proto.NewQuestionnaireServiceClient(c)
+	resp, err := client.GetQuestionnaire(ctx, &proto.GetQuestionnaireRequest{Ref: "testRef"})
 	assert.NoError(t, err)
 	assert.Equal(t, "Test Request", resp.GetQuestionnaire().Title)
 }

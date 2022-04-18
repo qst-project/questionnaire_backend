@@ -1,13 +1,13 @@
 package templates
 
 import (
-	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/proto"
 )
 
-func GetProtoQuestion() *api.Question {
-	return &api.Question{
+func GetProtoQuestion() *proto.Question {
+	return &proto.Question{
 		Statement: "Как дела?",
-		Type:      api.Types_RADIO,
+		Type:      proto.Types_RADIO,
 		Options: []string{
 			"Хорошо",
 			"Нормально",
@@ -16,10 +16,10 @@ func GetProtoQuestion() *api.Question {
 	}
 }
 
-func GetProtoQuestions() []*api.Question {
-	return []*api.Question{{
+func GetProtoQuestions() []*proto.Question {
+	return []*proto.Question{{
 		Statement: "Как дела?",
-		Type:      api.Types_RADIO,
+		Type:      proto.Types_RADIO,
 		Options: []string{
 			"Хорошо",
 			"Нормально",
@@ -28,7 +28,7 @@ func GetProtoQuestions() []*api.Question {
 	},
 		{
 			Statement: "Cколько тебе лет?",
-			Type:      api.Types_RADIO,
+			Type:      proto.Types_RADIO,
 			Options: []string{
 				"<20",
 				">20",
@@ -37,9 +37,9 @@ func GetProtoQuestions() []*api.Question {
 	}
 }
 
-func GetProtoQuestionnaire() *api.Questionnaire {
-	return &api.Questionnaire{
-		Ref:       "/testRef",
+func GetProtoQuestionnaire() *proto.Questionnaire {
+	return &proto.Questionnaire{
+		Ref:       "testRef",
 		Title:     "Test Request",
 		Questions: GetProtoQuestions(),
 	}

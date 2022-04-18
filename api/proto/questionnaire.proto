@@ -1,7 +1,7 @@
 syntax = "proto3";
-option go_package = "../../pkg/api";
+option go_package = "../../pkg/proto";
 
-package api;
+package proto;
 
 service QuestionnaireService {
   rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {};

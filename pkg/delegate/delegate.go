@@ -1,4 +1,4 @@
-package api
+package delegate
 
 import (
 	"github.com/qst-project/backend.git/pkg/usecase"
