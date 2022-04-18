@@ -14,8 +14,8 @@ type QuestionDB struct {
 
 	QuestionnaireId uint
 	Questionnaire   QuestionnaireDB `gorm:"foreignKey:QuestionnaireId;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Type            string          `gorm:"not null;size:20"`
-	Statement       string          `gorm:"size:256;not null"`
+	Type            uint
+	Statement       string `gorm:"size:256;not null"`
 	Order           uint
 }
 

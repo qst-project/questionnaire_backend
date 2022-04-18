@@ -1,4 +1,4 @@
-package api
+package delegate
 
 import (
 	"github.com/qst-project/backend.git/pkg/usecase"
@@ -12,11 +12,13 @@ type Module struct {
 }
 
 func Setup(createQuestionnaireUseCase usecase.CreateQuestionnaireUseCase,
-	getQuestionnaireUseCase usecase.GetQuestionnaireUseCase) Module {
+	getQuestionnaireUseCase usecase.GetQuestionnaireUseCase,
+	updateQuestionnaireUseCase usecase.UpdateQuestionnaireUseCase) Module {
 	return Module{
 		QuestionnaireDelegate: QuestionnaireDelegate{
 			createQuestionnaireUseCase,
 			getQuestionnaireUseCase,
+			updateQuestionnaireUseCase,
 		},
 	}
 }

@@ -1,110 +1,46 @@
 package unit
 
 import (
-	"github.com/qst-project/backend.git/pkg/api"
-	"github.com/qst-project/backend.git/pkg/core"
+	"github.com/qst-project/backend.git/pkg/proto"
+	"github.com/qst-project/backend.git/test/unit/templates"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestMappingProtoQuestionnaireToCore(t *testing.T) {
-	protoQuestionnaire := &api.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: "radio", Options: []string{
-				"Хорошо",
-				"Нормально",
-				"Плохо",
-			}},
-		},
-	}
+	protoQuestionnaire := templates.GetProtoQuestionnaire()
 	coreQuestionnaire := protoQuestionnaire.ToCore()
 
-	if protoQuestionnaire.Ref != coreQuestionnaire.Ref {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.GetRef(), coreQuestionnaire.Ref)
-	}
-	if protoQuestionnaire.Title != coreQuestionnaire.Title {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.GetTitle(), coreQuestionnaire.Title)
-	}
-	if protoQuestionnaire.Questions[0].Statement != coreQuestionnaire.Questions[0].Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.Questions[0].Statement, coreQuestionnaire.Questions[0].Statement)
-	}
+	assert.Equal(t, protoQuestionnaire.Ref, coreQuestionnaire.Ref)
+	assert.Equal(t, protoQuestionnaire.Title, coreQuestionnaire.Title)
+	assert.Equal(t, protoQuestionnaire.Questions[0].Statement, coreQuestionnaire.Questions[0].Statement)
 }
 
 func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
-	coreQuestionnaire := &core.Questionnaire{
-		Ref:   "/testRef",
-		Title: "Test Request",
-		Questions: []*core.Question{
-			{
-				Id:        1,
-				Statement: "Как дела?",
-				Type:      "radio",
-				Options: []string{
-					"Хорошо",
-					"Нормально",
-					"Плохо",
-				}},
-		},
-	}
-	var protoQuestionnaire api.Questionnaire
+	coreQuestionnaire := templates.GetCoreQuestionnaire()
+	var protoQuestionnaire proto.Questionnaire
 	protoQuestionnaire.FromCore(coreQuestionnaire)
 
-	if protoQuestionnaire.Ref != coreQuestionnaire.Ref {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.GetRef(), coreQuestionnaire.Ref)
-	}
-	if protoQuestionnaire.Title != coreQuestionnaire.Title {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.GetTitle(), coreQuestionnaire.Title)
-	}
-	if protoQuestionnaire.Questions[0].Statement != coreQuestionnaire.Questions[0].Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestionnaire.Questions[0].Statement, coreQuestionnaire.Questions[0].Statement)
-	}
+	assert.Equal(t, protoQuestionnaire.Ref, coreQuestionnaire.Ref)
+	assert.Equal(t, protoQuestionnaire.Title, coreQuestionnaire.Title)
+	assert.Equal(t, protoQuestionnaire.Questions[0].Statement, coreQuestionnaire.Questions[0].Statement)
 }
 
 func TestMappingProtoQuestionToCore(t *testing.T) {
-	protoQuestion := &api.Question{
-		Statement: "Как дела?",
-		Type:      "radio",
-		Options: []string{
-			"Хорошо",
-			"Нормально",
-			"Плохо",
-		},
-	}
-
+	protoQuestion := templates.GetProtoQuestion()
 	coreQuestion := protoQuestion.ToCore()
 
-	if protoQuestion.Statement != coreQuestion.Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetStatement(), coreQuestion.Statement)
-	}
-	if protoQuestion.Type != coreQuestion.Type {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetType(), coreQuestion.Type)
-	}
-	if protoQuestion.Options[0] != coreQuestion.Options[0] {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.Options[0], coreQuestion.Options[0])
-	}
+	assert.Equal(t, protoQuestion.Statement, coreQuestion.Statement)
+	assert.Equal(t, uint(protoQuestion.Type), uint(coreQuestion.Type))
+	assert.Equal(t, protoQuestion.Options[0], coreQuestion.Options[0])
 }
 
 func TestMappingProtoQuestionFromCore(t *testing.T) {
-	coreQuestion := &core.Question{
-		Statement: "Как дела?",
-		Type:      "radio",
-		Options: []string{
-			"Хорошо",
-			"Нормально",
-			"Плохо",
-		},
-	}
-	var protoQuestion api.Question
+	coreQuestion := templates.GetCoreQuestion()
+	var protoQuestion proto.Question
 	protoQuestion.FromCore(coreQuestion)
 
-	if protoQuestion.Statement != coreQuestion.Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetStatement(), coreQuestion.Statement)
-	}
-	if protoQuestion.Type != coreQuestion.Type {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetType(), coreQuestion.Type)
-	}
-	if protoQuestion.Options[0] != coreQuestion.Options[0] {
-		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.Options[0], coreQuestion.Options[0])
-	}
+	assert.Equal(t, protoQuestion.Statement, coreQuestion.Statement)
+	assert.Equal(t, uint(protoQuestion.Type), uint(coreQuestion.Type))
+	assert.Equal(t, protoQuestion.Options[0], coreQuestion.Options[0])
 }

@@ -1,7 +1,7 @@
 syntax = "proto3";
-option go_package = "../../pkg/api";
+option go_package = "../../pkg/proto";
 
-package api;
+package proto;
 
 service QuestionnaireService {
   rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {};
@@ -49,8 +49,14 @@ message Questionnaire {
 message Question {
   string id = 1;
   string statement = 2;
-  string type = 3;
+  Types type = 3;
   repeated string options = 4;
+}
+
+enum Types {
+  RADIO = 0;
+  CHECKBOX = 1;
+  TEXT = 2;
 }
 
 message  Error {
