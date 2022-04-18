@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/qst-project/backend.git/app"
 	"github.com/qst-project/backend.git/pkg"
+	"github.com/qst-project/backend.git/pkg/api"
 	"github.com/qst-project/backend.git/pkg/delegate"
 	"github.com/qst-project/backend.git/pkg/proto"
 	"github.com/qst-project/backend.git/test/unit/templates"

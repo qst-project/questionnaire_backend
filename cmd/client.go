@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:9091", grpc.WithInsecure())
+	conn, err := grpc.Dial("51.250.82.230:9091", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 	}
