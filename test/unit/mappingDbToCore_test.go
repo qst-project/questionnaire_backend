@@ -3,6 +3,7 @@ package unit
 import (
 	"github.com/qst-project/backend.git/pkg/core"
 	"github.com/qst-project/backend.git/pkg/gateway"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -35,18 +36,10 @@ func TestMappingDbQuestionnaireToCore(t *testing.T) {
 
 	coreQuestionnaire := dbQuestionnaire.ToCore(dbQuestions, dbOptions)
 
-	if dbQuestionnaire.Ref != coreQuestionnaire.Ref {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestionnaire.Ref, coreQuestionnaire.Ref)
-	}
-	if dbQuestionnaire.Title != coreQuestionnaire.Title {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestionnaire.Title, coreQuestionnaire.Title)
-	}
-	if len(coreQuestionnaire.Questions) != len(dbQuestions) {
-		t.Errorf("got %+v\\n, wanted %+v\\n", len(coreQuestionnaire.Questions), len(dbQuestions))
-	}
-	if len(coreQuestionnaire.Questions[0].Options) != len(dbOptions) {
-		t.Errorf("got %+v\\n, wanted %+v\\n", len(coreQuestionnaire.Questions[0].Options), len(dbOptions))
-	}
+	assert.Equal(t, dbQuestionnaire.Ref, coreQuestionnaire.Ref)
+	assert.Equal(t, dbQuestionnaire.Title, coreQuestionnaire.Title)
+	assert.Equal(t, len(dbQuestions), len(coreQuestionnaire.Questions))
+	assert.Equal(t, len(dbOptions), len(coreQuestionnaire.Questions[0].Options))
 }
 
 func TestMappingDbQuestionnaireFromCore(t *testing.T) {
@@ -68,12 +61,8 @@ func TestMappingDbQuestionnaireFromCore(t *testing.T) {
 	var dbQuestionnaire gateway.QuestionnaireDB
 	dbQuestionnaire.FromCore(coreQuestionnaire)
 
-	if dbQuestionnaire.Ref != coreQuestionnaire.Ref {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestionnaire.Ref, coreQuestionnaire.Ref)
-	}
-	if dbQuestionnaire.Title != coreQuestionnaire.Title {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestionnaire.Title, coreQuestionnaire.Title)
-	}
+	assert.Equal(t, dbQuestionnaire.Ref, coreQuestionnaire.Ref)
+	assert.Equal(t, dbQuestionnaire.Title, coreQuestionnaire.Title)
 }
 
 func TestMappingDbQuestionToCore(t *testing.T) {
@@ -99,16 +88,9 @@ func TestMappingDbQuestionToCore(t *testing.T) {
 	}
 
 	coreQuestion := dbQuestion.ToCore(dbOptions)
-
-	if coreQuestion.Statement != dbQuestion.Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", coreQuestion.Statement, dbQuestion.Statement)
-	}
-	if uint(coreQuestion.Type) != dbQuestion.Type {
-		t.Errorf("got %+v\\n, wanted %+v\\n", coreQuestion.Type, dbQuestion.Type)
-	}
-	if len(coreQuestion.Options) != len(dbOptions) {
-		t.Errorf("got %+v\\n, wanted %+v\\n", len(coreQuestion.Options), len(dbOptions))
-	}
+	assert.Equal(t, dbQuestion.Statement, coreQuestion.Statement)
+	assert.Equal(t, dbQuestion.Type, uint(coreQuestion.Type))
+	assert.Equal(t, len(dbOptions), len(coreQuestion.Options))
 }
 
 func TestMappingDbQuestionFromCore(t *testing.T) {
@@ -124,10 +106,6 @@ func TestMappingDbQuestionFromCore(t *testing.T) {
 	var dbQuestion gateway.QuestionDB
 	dbQuestion.FromCore(1, 1, coreQuestion)
 
-	if dbQuestion.Statement != coreQuestion.Statement {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestion.Statement, coreQuestion.Statement)
-	}
-	if dbQuestion.Type != uint(coreQuestion.Type) {
-		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestion.Type, coreQuestion.Type)
-	}
+	assert.Equal(t, dbQuestion.Statement, coreQuestion.Statement)
+	assert.Equal(t, dbQuestion.Type, uint(coreQuestion.Type))
 }

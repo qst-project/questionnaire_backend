@@ -66,7 +66,7 @@ func TestCreateQuestionnaireEndpoint(t *testing.T) {
 		Ref:   "/testRef",
 		Title: "Test Request",
 		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: "radio", Options: []string{
+			{Id: "1", Statement: "Как дела?", Type: api.Types_RADIO, Options: []string{
 				"Хорошо",
 				"Нормально",
 				"Плохо",
