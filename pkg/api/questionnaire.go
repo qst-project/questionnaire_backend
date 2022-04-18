@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/qst-project/backend.git/pkg/core"
 	"github.com/qst-project/backend.git/pkg/usecase"
 )
 
@@ -16,14 +17,12 @@ func (s *QuestionnaireDelegate) CreateQuestionnaire(Questionnaire *Questionnaire
 	return
 }
 
-func (s *QuestionnaireDelegate) GetQuestionnaire(ref string) (Questionnaire, error) {
-	var protoQuestionnaire Questionnaire
+func (s *QuestionnaireDelegate) GetQuestionnaire(ref string) (core.Questionnaire, error) {
 	qst, err := s.GetQuestionnaireUseCase.Invoke(ref)
 	if err != nil {
-		return protoQuestionnaire, err
+		return qst, err
 	}
-	protoQuestionnaire.FromCore(&qst)
-	return protoQuestionnaire, nil
+	return qst, nil
 }
 
 func (s *QuestionnaireDelegate) UpdateQuestionnaire(Questionnaire *Questionnaire) (err error) {

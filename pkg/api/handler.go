@@ -39,10 +39,13 @@ func (h *RequestHandler) CreateQuestionnaire(ctx context.Context, req *CreateQue
 }
 
 func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionnaireRequest) (*GetQuestionnaireResponse, error) {
-	questionnaire, err := h.QuestionnaireDelegate.GetQuestionnaire(req.GetRef())
+	var protoQuestionnaire Questionnaire
+	qst, err := h.QuestionnaireDelegate.GetQuestionnaire(req.GetRef())
+	protoQuestionnaire.FromCore(&qst)
+
 	if err != nil {
 		return &GetQuestionnaireResponse{
-			Questionnaire: &questionnaire,
+			Questionnaire: &protoQuestionnaire,
 			Error: &Error{
 				Code: 1,
 				Text: err.Error(),
@@ -50,7 +53,7 @@ func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionn
 		}, err
 	}
 	return &GetQuestionnaireResponse{
-		Questionnaire: &questionnaire,
+		Questionnaire: &protoQuestionnaire,
 		Error: &Error{
 			Code: 0,
 			Text: "",
