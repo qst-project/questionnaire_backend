@@ -13,7 +13,7 @@ func TestMappingDbQuestionnaireToCore(t *testing.T) {
 	}
 	dbQuestions := []*gateway.QuestionDB{
 		{
-			Type:      "radio",
+			Type:      1,
 			Statement: "Как дела?",
 			Order:     1,
 		},
@@ -57,7 +57,7 @@ func TestMappingDbQuestionnaireFromCore(t *testing.T) {
 			{
 				Id:        1,
 				Statement: "Как дела?",
-				Type:      "radio",
+				Type:      0,
 				Options: []string{
 					"Хорошо",
 					"Нормально",
@@ -79,7 +79,7 @@ func TestMappingDbQuestionnaireFromCore(t *testing.T) {
 func TestMappingDbQuestionToCore(t *testing.T) {
 	dbQuestion := &gateway.QuestionDB{
 		Statement: "Как дела?",
-		Type:      "radio",
+		Type:      0,
 		Order:     1,
 	}
 
@@ -103,7 +103,7 @@ func TestMappingDbQuestionToCore(t *testing.T) {
 	if coreQuestion.Statement != dbQuestion.Statement {
 		t.Errorf("got %+v\\n, wanted %+v\\n", coreQuestion.Statement, dbQuestion.Statement)
 	}
-	if coreQuestion.Type != dbQuestion.Type {
+	if uint(coreQuestion.Type) != dbQuestion.Type {
 		t.Errorf("got %+v\\n, wanted %+v\\n", coreQuestion.Type, dbQuestion.Type)
 	}
 	if len(coreQuestion.Options) != len(dbOptions) {
@@ -114,7 +114,7 @@ func TestMappingDbQuestionToCore(t *testing.T) {
 func TestMappingDbQuestionFromCore(t *testing.T) {
 	coreQuestion := &core.Question{
 		Statement: "Как дела?",
-		Type:      "radio",
+		Type:      0,
 		Options: []string{
 			"Хорошо",
 			"Нормально",
@@ -127,7 +127,7 @@ func TestMappingDbQuestionFromCore(t *testing.T) {
 	if dbQuestion.Statement != coreQuestion.Statement {
 		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestion.Statement, coreQuestion.Statement)
 	}
-	if dbQuestion.Type != coreQuestion.Type {
+	if dbQuestion.Type != uint(coreQuestion.Type) {
 		t.Errorf("got %+v\\n, wanted %+v\\n", dbQuestion.Type, coreQuestion.Type)
 	}
 }

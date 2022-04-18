@@ -31,7 +31,7 @@ func (em *QuestionDB) ToCore(options []*OptionsDB) *core.Question {
 	return &core.Question{
 		Id:        core.Id(em.ID),
 		Statement: em.Statement,
-		Type:      em.Type,
+		Type:      core.Type(em.Type),
 		Options:   coreOptions,
 	}
 }
@@ -39,7 +39,7 @@ func (em *QuestionDB) ToCore(options []*OptionsDB) *core.Question {
 func (em *QuestionDB) FromCore(order, questionnaireId uint, question *core.Question) {
 	em.ID = uint(question.Id)
 	em.QuestionnaireId = questionnaireId
-	em.Type = question.Type
+	em.Type = uint(question.Type)
 	em.Statement = question.Statement
 	em.Order = order
 }

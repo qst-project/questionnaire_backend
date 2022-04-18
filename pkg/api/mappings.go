@@ -36,14 +36,14 @@ func (em *Question) ToCore() core.Question {
 	return core.Question{
 		Id:        core.Id(id),
 		Statement: em.Statement,
-		Type:      em.Type,
+		Type:      core.Type(em.Type),
 		Options:   em.Options,
 	}
 }
 
 func (em *Question) FromCore(question *core.Question) {
-	em.Id = strconv.FormatUint(uint64(question.Id), 32)
+	em.Id = strconv.FormatUint(uint64(question.Id), 10)
 	em.Statement = question.Statement
-	em.Type = question.Type
+	em.Type = Types(question.Type)
 	em.Options = question.Options
 }

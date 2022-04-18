@@ -11,8 +11,6 @@ type QuestionnaireGatewayImpl struct {
 }
 
 func (r *QuestionnaireGatewayImpl) GetQuestionnaire(ref string) (core.Questionnaire, error) {
-	//TODO implement me
-
 	var questionnaireDb QuestionnaireDB
 	var questionsDb []*QuestionDB
 	var optionsDb []*OptionsDB
@@ -44,7 +42,7 @@ func (r *QuestionnaireGatewayImpl) DeleteQuestionnaire(ref string) (bool, error)
 	panic("implement me")
 }
 
-func (r *QuestionnaireGatewayImpl) UpdateQuestionnaire(Questionnaire core.Questionnaire) (bool, error) {
+func (r *QuestionnaireGatewayImpl) UpdateQuestionnaire(Questionnaire core.Questionnaire) error {
 	//TODO implement me
 	panic("implement me")
 }

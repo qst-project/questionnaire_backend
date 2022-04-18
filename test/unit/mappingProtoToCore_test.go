@@ -11,7 +11,7 @@ func TestMappingProtoQuestionnaireToCore(t *testing.T) {
 		Ref:   "/testRef",
 		Title: "Test Request",
 		Questions: []*api.Question{
-			{Id: "1", Statement: "Как дела?", Type: "radio", Options: []string{
+			{Id: "1", Statement: "Как дела?", Type: 0, Options: []string{
 				"Хорошо",
 				"Нормально",
 				"Плохо",
@@ -39,7 +39,7 @@ func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
 			{
 				Id:        1,
 				Statement: "Как дела?",
-				Type:      "radio",
+				Type:      0,
 				Options: []string{
 					"Хорошо",
 					"Нормально",
@@ -64,7 +64,7 @@ func TestMappingProtoQuestionnaireFromCore(t *testing.T) {
 func TestMappingProtoQuestionToCore(t *testing.T) {
 	protoQuestion := &api.Question{
 		Statement: "Как дела?",
-		Type:      "radio",
+		Type:      0,
 		Options: []string{
 			"Хорошо",
 			"Нормально",
@@ -77,7 +77,7 @@ func TestMappingProtoQuestionToCore(t *testing.T) {
 	if protoQuestion.Statement != coreQuestion.Statement {
 		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetStatement(), coreQuestion.Statement)
 	}
-	if protoQuestion.Type != coreQuestion.Type {
+	if uint(protoQuestion.Type) != uint(coreQuestion.Type) {
 		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetType(), coreQuestion.Type)
 	}
 	if protoQuestion.Options[0] != coreQuestion.Options[0] {
@@ -88,7 +88,7 @@ func TestMappingProtoQuestionToCore(t *testing.T) {
 func TestMappingProtoQuestionFromCore(t *testing.T) {
 	coreQuestion := &core.Question{
 		Statement: "Как дела?",
-		Type:      "radio",
+		Type:      1,
 		Options: []string{
 			"Хорошо",
 			"Нормально",
@@ -101,7 +101,7 @@ func TestMappingProtoQuestionFromCore(t *testing.T) {
 	if protoQuestion.Statement != coreQuestion.Statement {
 		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetStatement(), coreQuestion.Statement)
 	}
-	if protoQuestion.Type != coreQuestion.Type {
+	if uint(protoQuestion.Type) != uint(coreQuestion.Type) {
 		t.Errorf("got %+v\\n, wanted %+v\\n", protoQuestion.GetType(), coreQuestion.Type)
 	}
 	if protoQuestion.Options[0] != coreQuestion.Options[0] {

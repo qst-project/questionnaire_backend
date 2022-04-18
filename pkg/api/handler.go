@@ -58,6 +58,24 @@ func (h *RequestHandler) GetQuestionnaire(ctx context.Context, req *GetQuestionn
 	}, nil
 }
 
+func (h *RequestHandler) UpdateQuestionnaire(ctx context.Context, req *UpdateQuestionnaireRequest) (*UpdateQuestionnaireResponse, error) {
+	err := h.QuestionnaireDelegate.UpdateQuestionnaire(req.GetQuestionnaire())
+	if err != nil {
+		return &UpdateQuestionnaireResponse{
+			Error: &Error{
+				Code: 0,
+				Text: err.Error(),
+			},
+		}, err
+	}
+	return &UpdateQuestionnaireResponse{
+		Error: &Error{
+			Code: 0,
+			Text: "",
+		},
+	}, nil
+}
+
 func NewGrpcHandler(handlerArgs RequestHandlerArgs) Handler {
 	return &RequestHandler{
 		RequestHandlerArgs: handlerArgs,

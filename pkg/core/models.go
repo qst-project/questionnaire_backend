@@ -1,6 +1,13 @@
 package core
 
 type Id uint
+type Type uint
+
+const (
+	RADIO    Type = 1
+	CHECKBOX Type = 2
+	TEXT     Type = 3
+)
 
 type Questionnaire struct {
 	Id
@@ -13,6 +20,6 @@ type Questionnaire struct {
 type Question struct {
 	Id
 	Statement string
-	Type      string
+	Type      Type
 	Options   []string
 }

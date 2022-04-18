@@ -7,6 +7,7 @@ import (
 type QuestionnaireDelegate struct {
 	usecase.CreateQuestionnaireUseCase
 	usecase.GetQuestionnaireUseCase
+	usecase.UpdateQuestionnaireUseCase
 }
 
 func (s *QuestionnaireDelegate) CreateQuestionnaire(Questionnaire *Questionnaire) (ref string, err error) {
@@ -23,4 +24,10 @@ func (s *QuestionnaireDelegate) GetQuestionnaire(ref string) (Questionnaire, err
 	}
 	protoQuestionnaire.FromCore(&qst)
 	return protoQuestionnaire, nil
+}
+
+func (s *QuestionnaireDelegate) UpdateQuestionnaire(Questionnaire *Questionnaire) (err error) {
+	qst := Questionnaire.ToCore()
+	err = s.UpdateQuestionnaireUseCase.Invoke(qst)
+	return
 }
