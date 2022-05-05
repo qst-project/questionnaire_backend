@@ -18,6 +18,7 @@ func GetProtoQuestion() *proto.Question {
 
 func GetProtoQuestions() []*proto.Question {
 	return []*proto.Question{{
+		Id:        "1",
 		Statement: "Как дела?",
 		Type:      proto.Types_RADIO,
 		Options: []string{
@@ -27,6 +28,7 @@ func GetProtoQuestions() []*proto.Question {
 		},
 	},
 		{
+			Id:        "2",
 			Statement: "Cколько тебе лет?",
 			Type:      proto.Types_RADIO,
 			Options: []string{
@@ -39,6 +41,7 @@ func GetProtoQuestions() []*proto.Question {
 
 func GetProtoQuestionnaire() *proto.Questionnaire {
 	return &proto.Questionnaire{
+		Id:        1,
 		Ref:       "testRef",
 		Title:     "Test Request",
 		Questions: GetProtoQuestions(),

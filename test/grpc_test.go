@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/qst-project/backend.git/app"
 	"github.com/qst-project/backend.git/pkg"
-	"github.com/qst-project/backend.git/pkg/api"
+	"github.com/qst-project/backend.git/pkg/api/rpc"
 	"github.com/qst-project/backend.git/pkg/delegate"
 	"github.com/qst-project/backend.git/pkg/proto"
 	"github.com/qst-project/backend.git/test/unit/templates"
@@ -21,7 +21,7 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 }
 
 func RegisterTestGrpcServer(
-	lifecycle fx.Lifecycle, handler api.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate delegate.QuestionnaireDelegate,
+	lifecycle fx.Lifecycle, handler rpc.Handler, config pkg.Config, logger *log.Logger, questionnaireDelegate delegate.QuestionnaireDelegate,
 ) {
 	lifecycle.Append(
 		fx.Hook{

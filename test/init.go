@@ -26,7 +26,7 @@ func init() {
 	//	fx.Invoke(api.RegisterGrpcServer),
 	//)
 	lis = bufconn.Listen(bufSize)
-	//server := grpc.NewServer()
+	//server := rpc.NewServer()
 	//logger := pkg.NewLogger()
 	//config, _ := pkg.NewConfig()
 	//postgresClient, _ := gateway.NewPostgresClient(config, logger)

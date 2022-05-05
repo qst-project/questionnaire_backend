@@ -3,10 +3,12 @@ module github.com/qst-project/backend.git
 go 1.13
 
 require (
+	github.com/gin-gonic/gin v1.7.7 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jackc/pgx/v4 v4.14.1 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/lib/pq v1.10.4 // indirect
+	github.com/rs/cors v1.8.2 // indirect
 	github.com/stretchr/testify v1.7.1
 	go.uber.org/fx v1.16.0
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
